@@ -373,6 +373,124 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
 @media (max-width:380px){.stats .v{font-size:22px}.cands{grid-template-columns:1fr}}
 </style>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@700;900&family=Assistant:wght@400;600;700;800&display=swap">
+<style>
+:root{
+  --bg:#FFFFFF;--surface:#F1F5FD;--surface2:#E3EBFA;--ink:#0A1F5C;--muted:#4D5E87;--line:#C8D5F0;
+  --flag:#0038B8;--accent:#0038B8;--accent-soft:#DCE6FB;--on-accent:#FFFFFF;
+  --good:#17754A;--good-soft:#DDF1E6;--warn:#8F5400;--warn-soft:#F8EBD3;--bad:#B42318;--bad-soft:#F9E0DD;
+  --shadow:0 12px 32px rgba(10,31,92,.16);--scrim:rgba(10,31,92,.42);
+  color-scheme:light;
+}
+html,body{background:var(--bg);height:100%}
+#app::before,#app::after{content:"";display:block;height:30px;background:linear-gradient(to bottom,#fff 0 6px,var(--flag) 6px 16px,#fff 16px)}
+#app::after{transform:scaleY(-1)}
+.flag{display:block;width:112px;height:auto;filter:drop-shadow(0 4px 10px rgba(10,31,92,.18));border-radius:3px}
+.flag.sm{width:44px;filter:none;box-shadow:0 0 0 1px var(--line)}
+body{color:var(--ink);font-family:"Assistant",system-ui,"Segoe UI",Arial,sans-serif;font-size:16px;line-height:1.5;-webkit-tap-highlight-color:transparent}
+*{box-sizing:border-box}
+.wrap{max-width:560px;margin:0 auto;padding-inline:16px;padding-block:18px 48px;display:flex;flex-direction:column;gap:18px}
+.display{font-family:"Frank Ruhl Libre","David Libre",Georgia,serif;font-weight:900;letter-spacing:-.01em}
+.num{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--muted)}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+/* intro */
+.hero{display:grid;gap:6px;justify-items:center;text-align:center;padding-top:8px}
+.hero .big{font-size:clamp(96px,30vw,150px);line-height:.85;color:var(--accent)}
+.hero h1{font-size:28px}
+.hero p{max-width:34ch;color:var(--muted)}
+.hemi{width:100%;max-width:100%;display:block}
+.hemi-box{position:relative}
+.hemi-label{position:absolute;inset-inline:0;bottom:2%;text-align:center;line-height:1}
+.hemi-label .n{font-size:clamp(34px,11vw,52px)}
+.hemi-label .of{font-size:14px;color:var(--muted);font-weight:700}
+.cands{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cand{background:#fff;border:2px solid var(--line);border-radius:14px;padding:14px;text-align:start;display:grid;gap:4px}
+.cand[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 3px var(--accent-soft)}
+.cand .who{font-weight:800;font-size:17px;line-height:1.2}
+.cand .sub{font-size:13px;color:var(--muted)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;vertical-align:middle;margin-inline-end:6px}
+.btn{border:0;border-radius:12px;padding:14px 18px;font-weight:800;font-size:17px;background:var(--accent);color:var(--on-accent);width:100%}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.btn.small{padding:10px 14px;font-size:15px;width:auto}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row > .btn{flex:1 1 160px}
+.rules{display:grid;gap:8px;background:var(--surface);border-radius:14px;padding:14px 16px;font-size:15px}
+.rules li{margin:0}
+.rules ul{margin:0;padding-inline-start:18px;display:grid;gap:4px}
+.fine{font-size:12.5px;color:var(--muted);line-height:1.55}
+.code-in{display:flex;gap:8px;align-items:center}
+.code-in input{flex:1;min-width:0;font:inherit;padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--ink);direction:ltr;text-align:center;letter-spacing:.1em;text-transform:uppercase}
+.linkbtn{background:none;border:0;color:var(--accent);font-weight:700;padding:4px 0;text-decoration:underline;text-underline-offset:3px}
+
+/* board */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--surface);border-radius:12px;padding:10px 12px;display:grid;gap:4px}
+.stat .v{font-size:26px;font-weight:800;line-height:1}
+.stat .l{font-size:12px;font-weight:700;color:var(--muted)}
+.bar{height:6px;border-radius:3px;background:var(--surface2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:3px;transition:width .4s}
+.bar.low i{background:var(--bad)}
+.commits{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:13px}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--surface2);color:var(--muted);white-space:nowrap}
+.chip.good{background:var(--good-soft);color:var(--good)}
+.chip.warn{background:var(--warn-soft);color:var(--warn)}
+.chip.bad{background:var(--bad-soft);color:var(--bad)}
+.chip.acc{background:var(--accent-soft);color:var(--accent)}
+.list{display:grid;gap:6px}
+.prow{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;background:var(--surface);border:0;border-radius:12px;padding:11px 12px;text-align:start;width:100%}
+.prow:disabled{cursor:default;opacity:.62}
+.prow .sw{width:14px;height:14px;border-radius:4px}
+.prow .nm{font-weight:800;line-height:1.2}
+.prow .meta{font-size:13px;color:var(--muted)}
+.prow .seats{font-size:22px;font-weight:800;min-width:2ch;text-align:center}
+.prow.open{box-shadow:inset 0 0 0 2px transparent}
+.prow.open:hover{box-shadow:inset 0 0 0 2px var(--accent)}
+.sect{font-size:13px;font-weight:800;color:var(--muted);letter-spacing:.04em;margin-top:4px}
+.banner{background:var(--accent-soft);color:var(--ink);border-radius:12px;padding:12px 14px;display:grid;gap:10px}
+
+/* sheet */
+.scrim{position:fixed;inset:0;background:var(--scrim);display:flex;align-items:flex-end;justify-content:center;z-index:10;animation:fade .18s ease-out}
+.sheet{background:var(--bg);border-top:8px solid var(--flag);width:100%;max-width:560px;max-height:92%;overflow:auto;border-radius:20px 20px 0 0;padding-inline:16px;padding-block:18px calc(22px + env(safe-area-inset-bottom,0px));display:grid;gap:14px;box-shadow:var(--shadow);animation:up .22s ease-out}
+.sheet h2{font-size:24px}
+.demand{background:var(--surface);border-radius:14px;padding:14px 16px;display:grid;gap:6px}
+.demand .q{font-size:19px;font-weight:700;line-height:1.35}
+.opts{display:grid;gap:8px}
+.opt{background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:12px 14px;text-align:start;display:grid;gap:8px;width:100%}
+.opt:hover{border-color:var(--accent)}
+.opt .t{font-weight:800;font-size:16.5px;line-height:1.3}
+.tags{display:flex;gap:5px;flex-wrap:wrap}
+.result{background:var(--surface);border-radius:14px;padding:16px;display:grid;gap:8px}
+.result .head{font-size:22px}
+.result ul{margin:0;padding-inline-start:18px;display:grid;gap:4px}
+.mood{font-size:13px;font-weight:700}
+
+/* swear / end */
+.votes{display:grid;gap:6px}
+.vrow{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;background:var(--surface);border-radius:10px;padding:9px 12px;animation:up .3s ease-out both}
+.endcard{background:linear-gradient(to bottom,#fff 0 10px,var(--flag) 10px 20px,var(--surface) 20px);border-radius:18px;padding:36px 18px 20px;display:grid;gap:10px;text-align:center;justify-items:center}
+.endcard .title{font-size:30px;line-height:1.1}
+.endcard .score{font-size:64px;line-height:1;color:var(--accent)}
+.break{width:100%;display:grid;gap:4px;font-size:14.5px;text-align:start}
+.break div{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid var(--line);padding-block:5px}
+.sharebox{width:100%;font:inherit;font-size:14px;padding:10px;border-radius:10px;border:2px solid var(--line);background:var(--surface2);color:var(--ink);resize:none}
+
+.seat{animation:pop .35s ease-out both}
+@keyframes pop{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
+@keyframes up{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.seat,.scrim,.sheet,.vrow{animation:none}.bar i{transition:none}}
+@media (max-width:380px){.stats .v{font-size:22px}.cands{grid-template-columns:1fr}}
+</style>
+
 <div id="app"></div>
 
 <script>
@@ -389,118 +507,102 @@ const SENIOR=['אוצר','ביטחון','חוץ','משפטים'];
 const REDS=[['otzma','raam'],['otzma','joint'],['otzma','dems'],['rzp','raam'],['rzp','joint'],['rzp','dems']];
 
 const P=[
- {id:'joint',name:'הרשימה המשותפת',short:'המשותפת',color:'#C2477F',base:7.3,sd:1.1,pos:0,never:true,x:0,y:2},
- {id:'ale',name:'עלה ירוק',short:'עלה ירוק',color:'#4FA03C',base:0.7,sd:.7,pos:2.5,x:3.5,y:.5,bluff:.4,rel:.6,
-  card:{demand:'לגליזציה מלאה של קנאביס, ויושב ראש ועדת הבריאות.',opts:[
-   {t:'מקבל/ת את שני התנאים',sure:1,ports:['ועדת הבריאות']},
-   {t:'ועדה שתבחן לגליזציה, בלי התחייבות',base:.55},
-   {t:'ועדת הבריאות, בלי לגליזציה',base:.45,ports:['ועדת הבריאות']},
-   {t:'לא מתחייב/ת לכלום',refuse:1}]}},
+ {id:'joint',name:'הרשימה המשותפת',short:'המשותפת',color:'#C2477F',base:7.3,sd:1.1,pos:0,x:0,y:2,never:true},
+ {id:'ale',name:'עלה ירוק',short:'עלה ירוק',color:'#4FA03C',base:.7,sd:.7,pos:2.5,x:3.5,y:.5,bluff:.4,rel:.6,
+  ports:[['ראשות ועדת הבריאות','ועדת הבריאות'],['תפקיד סגן שר בבריאות','סגן שר בבריאות']],
+  alts:[['תיק הגנת הסביבה','הגנת הסביבה'],['תיק התיירות','תיירות']],
+  asks:[{t:'לגליזציה מלאה של קנאביס',short:'הלגליזציה',b:'וועדה שתבחן לגליזציה',w:"הבוחרים שלנו שלחו אותנו לכנסת בשביל הסעיף הזה. בלעדיו אין לנו מה להסביר להם."},
+                {t:'שחרור אסירים בעבירות קנאביס קלות',short:'מהלך השחרור',b:'ובחינה פרטנית של התיקים',w:"יש אלפי תיקים פליליים על כמויות קטנות. זה מה שהבטחנו לתקן."}]},
+ {id:'raam',name:'רע״מ',short:'רע״מ',color:'#2E9E6A',base:4.9,sd:.9,pos:1,x:1.5,y:7,bluff:.4,rel:.75,
+  ports:[['תפקיד סגן שר','סגן שר'],['ראשות ועדת הפנים','ועדת הפנים']],
+  alts:[['תפקיד סגן שר בבריאות','סגן שר בבריאות'],['תיק הפריפריה','פריפריה']],
+  asks:[{t:'תוכנית חומש נגד הפשיעה בחברה הערבית',short:'תוכנית החומש',b:'ותוכנית חומש מצומצמת',w:"הפשיעה היא סיבת המוות מספר אחת בציבור שלנו. בלי תקציב, הישיבה הזו לא שווה כלום."},
+                {t:'הסדרת מעמד הכפרים הלא-מוכרים בנגב',short:'ההסדרה בנגב',b:'וועדה שתבחן את ההסדרה',w:"עשרות אלפי אנשים חיים בלי חשמל וכתובת. אנחנו לא יכולים לחזור בלי הסדרה."}]},
+ {id:'dems',name:'הדמוקרטים',short:'הדמוקרטים',color:'#D94E4E',base:9.9,sd:1.3,pos:2,x:1,y:0,bluff:.3,rel:.85,
+  ports:[['תיק המשפטים','משפטים'],['תיק החינוך','חינוך']],
+  alts:[['תיק הבריאות','בריאות'],['תיק הגנת הסביבה','הגנת הסביבה']],
+  asks:[{t:'מחויבות לפתוח בשיחות מדיניות',short:'השיחות המדיניות',b:'ונוסח עמום על שיחות מדיניות',issue:{security:'deal'},w:"הבטחנו לבוחרים שלנו שלא ניכנס לממשלה שסוגרת את הדלת לכל מהלך מדיני."},
+                {t:'ביטול חקיקה שנויה במחלוקת במערכת המשפט',short:'המהלך במערכת המשפט',b:'וועדה שתבחן את החקיקה',w:"זו הסיבה שהמפלגה הזו קמה. בלי זה אין לנו מנדט מהבוחרים שלנו."}]},
  {id:'bw',name:'כחול לבן',short:'כחול לבן',color:'#1E4E8C',base:3.1,sd:1,pos:3.5,x:4.5,y:3,bluff:.3,rel:.85,
-  card:{demand:'תיק הביטחון, והקמת ועדת חקירה ממלכתית.',opts:[
-   {t:'מקבל/ת את שני התנאים',sure:1,ports:['ביטחון']},
-   {t:'ועדת חקירה, בלי תיק הביטחון',base:.5},
-   {t:'תיק המשפטים במקום הביטחון',base:.45,ports:['משפטים']},
-   {t:'לא מתחייב/ת לכלום',refuse:1}]}},
+  ports:[['תיק הביטחון','ביטחון'],['תיק המשפטים','משפטים']],
+  alts:[['תיק החוץ','חוץ'],['תיק הבריאות','בריאות']],
+  asks:[{t:'הקמת ועדת חקירה ממלכתית',short:'ועדת החקירה',b:'וועדה ממשלתית במקום ועדת חקירה',w:"הציבור דורש תשובות על מה שקרה. ועדה ממלכתית היא תנאי שלא מתמקחים עליו."},
+                {t:'מחויבות לעצמאות בתי המשפט',short:'המחויבות לבתי המשפט',b:'והצהרה כללית בנושא',w:"אנחנו לא נשב בממשלה שתפגע בעצמאות בתי המשפט. זה קו אדום ציבורי."}]},
+ {id:'yashar',name:'ישר!',short:'ישר!',color:'#0E9AA7',base:23.9,sd:2,pos:3,x:4,y:2,bluff:.2,rel:.9,
+  ports:[['תיק הביטחון','ביטחון'],['תיק החוץ','חוץ']],
+  alts:[['תיק החינוך','חינוך'],['תיק הכלכלה','כלכלה']],
+  asks:[{t:'רוטציה בראשות הממשלה, כשהם ראשונים',short:'רוטציה',b:'ורוטציה שבה את/ה ראשון/ה',rot:1,w:"קיבלנו את מספר המנדטים הגדול בגוש. הציבור לא יבין למה לא אנחנו מובילים."},
+                {t:'חוק גיוס שוויוני',short:'חוק הגיוס',b:'ונוסח עמום בחוק הגיוס',issue:{draft:'draft'},w:"שוויון בנטל הוא הנושא שסביבו נבחרנו. בלי חקיקה, אין הסכם."}]},
+ {id:'together',name:'ביחד',short:'ביחד',color:'#7A4FD0',base:13,sd:1.6,pos:4,x:5,y:3,bluff:.35,rel:.8,
+  ports:[['תיק החוץ','חוץ'],['תיק החינוך','חינוך']],
+  alts:[['תיק הכלכלה','כלכלה'],['תיק התיירות','תיירות']],
+  asks:[{t:'חוק גיוס שוויוני',short:'חוק הגיוס',b:'ונוסח עמום בחוק הגיוס',issue:{draft:'draft'},w:"זה היה הסעיף הראשון בקמפיין שלנו. אי אפשר לוותר עליו בחדר סגור."},
+                {t:'תקציב חינוך רב-שנתי',short:'תקציב החינוך',b:'ותוספת תקציב חלקית',trust:-2,w:"בלי תקציב רב-שנתי, כל הצהרה על חינוך היא מילים."}]},
  {id:'nep',name:'מפלגה כלכלית חדשה',short:'הכלכלית',color:'#00838F',base:1.9,sd:.9,pos:4.2,x:4.5,y:1.5,bluff:.35,rel:.8,
-  card:{demand:'משרד ייעודי ליוקר המחיה, ותוכנית לשבירת ריכוזיות.',opts:[
-   {t:'מקבל/ת את שני התנאים',sure:1,ports:['יוקר המחיה']},
-   {t:'המשרד, בלי תוכנית מחייבת',base:.55,ports:['יוקר המחיה']},
-   {t:'תוכנית משותפת, בלי משרד',base:.5},
-   {t:'לא מתחייב/ת לכלום',refuse:1}]}},
- {id:'zh',name:'הבית הציוני – המילואימניקים',short:'הבית הציוני',color:'#7E9C3A',base:3.4,sd:1,pos:6.2,x:6.5,y:4,bluff:.35,rel:.8,cares:{draft:'draft'},
-  card:{demand:'חוק גיוס שוויוני, ותיק המילואים והחוסן.',opts:[
-   {t:'מקבל/ת את שני התנאים',sure:1,ports:['המילואים'],issue:{draft:'draft'}},
-   {t:'תיק המילואים, ונוסח עמום בגיוס',base:.5,ports:['המילואים']},
-   {t:'חוק גיוס, וראשות ועדת חוץ וביטחון במקום',base:.5,ports:['ועדת חוץ וביטחון'],issue:{draft:'draft'}},
-   {t:'לא מתחייב/ת לכלום',refuse:1}]}},
+  ports:[['משרד ליוקר המחיה','יוקר המחיה'],['תיק הכלכלה','כלכלה']],
+  alts:[['תפקיד סגן שר באוצר','סגן שר באוצר'],['תיק התיירות','תיירות']],
+  asks:[{t:'תוכנית לשבירת ריכוזיות',short:'התוכנית',b:'וועדה לבחינת הריכוזיות',w:"בלי כלים בידיים, משרד ליוקר המחיה הוא שלט על דלת."},
+                {t:'הפחתת מסים על מוצרי יסוד',short:'הפחתת המסים',b:'והפחתה חלקית',trust:-2,w:"הבטחנו הוזלה מיידית. בלי זה אנחנו לא נכנסים."}]},
+ {id:'indy',name:'ח״כ עצמאי',short:'הח״כ העצמאי',color:'#8A94A6',base:0,sd:0,pos:5.5,x:5.5,y:5,bluff:0,rel:.6},
+ {id:'yb',name:'ישראל ביתנו',short:'ישראל ביתנו',color:'#6F9A2E',base:8.4,sd:1.2,pos:5,x:6,y:0,bluff:.45,rel:.8,
+  ports:[['תיק האוצר','אוצר'],['תיק הביטחון','ביטחון']],
+  alts:[['תיק האנרגיה','אנרגיה'],['תיק התחבורה','תחבורה']],
+  asks:[{t:'חוק גיוס לכולם',short:'חוק הגיוס',b:'ונוסח עמום בחוק הגיוס',issue:{draft:'draft'},w:"אנחנו לא נכנסים לממשלה שמנציחה את הפטור. זו עמדה שאנחנו חוזרים עליה שנים."},
+                {t:'תחבורה ציבורית בשבת ברשויות שיבחרו בכך',short:'התחבורה בשבת',b:'ופיילוט מצומצם בכמה רשויות',w:"המדינה לא יכולה לעצור ביום שבת. זה מה שהבוחרים שלנו ביקשו."}]},
+ {id:'zh',name:'הבית הציוני – המילואימניקים',short:'הבית הציוני',color:'#7E9C3A',base:3.4,sd:1,pos:6.2,x:6.5,y:4,bluff:.35,rel:.8,
+  ports:[['תיק המילואים והחוסן','המילואים'],['ראשות ועדת חוץ וביטחון','ועדת חוץ וביטחון']],
+  alts:[['תיק הרווחה','רווחה'],['תפקיד סגן שר בביטחון','סגן שר בביטחון']],
+  asks:[{t:'חוק גיוס שוויוני',short:'חוק הגיוס',b:'ונוסח עמום בחוק הגיוס',issue:{draft:'draft'},w:"המילואימניקים נשאו את הנטל. הם רוצים לראות חקיקה, לא הבטחות."},
+                {t:'חבילת הטבות למשרתי מילואים',short:'חבילת ההטבות',b:'וחבילה מצומצמת',trust:-2,w:"אנשים איבדו עסקים ומשרות. חבילת הטבות היא המינימום."}]},
  {id:'unity',name:'האחדות',short:'האחדות',color:'#5C6BC0',base:1.5,sd:.9,pos:6.8,x:7,y:4,bluff:.4,rel:.75,
-  card:{demand:'שני תיקים בכירים: משפטים וחוץ.',opts:[
-   {t:'מקבל/ת: משפטים וחוץ',sure:1,ports:['משפטים','חוץ']},
-   {t:'תיק המשפטים בלבד',base:.5,ports:['משפטים']},
-   {t:'תיק החוץ בלבד',base:.5,ports:['חוץ']},
-   {t:'לא מתחייב/ת לכלום',refuse:1}]}},
- {id:'zehut',name:'זהות',short:'זהות',color:'#C2560F',base:2.2,sd:.9,pos:8.2,x:8,y:6,bluff:.45,rel:.65,cares:{security:'hawk'},
-  card:{demand:'רפורמה כלכלית ליברלית, ותיק הכלכלה.',opts:[
-   {t:'מקבל/ת את שני התנאים',sure:1,ports:['כלכלה']},
-   {t:'הרפורמה, בלי תיק',base:.5},
-   {t:'תיק התיירות במקום הכלכלה',base:.45,ports:['תיירות']},
-   {t:'לא מתחייב/ת לכלום',refuse:1}]}},
- {id:'noam',name:'נעם',short:'נעם',color:'#8E24AA',base:0.8,sd:.7,pos:9.2,x:9.5,y:10,bluff:.4,rel:.75,cares:{draft:'exempt'},
-  card:{demand:'סגן שר במשרד החינוך, וחוק שמעגן פטור מגיוס.',opts:[
-   {t:'מקבל/ת את שני התנאים',sure:1,ports:['סגן שר בחינוך'],issue:{draft:'exempt'}},
-   {t:'סגן שר, ונוסח עמום בחוק',base:.5,ports:['סגן שר בחינוך']},
-   {t:'החוק, בלי תפקיד',base:.5,issue:{draft:'exempt'}},
-   {t:'לא מתחייב/ת לכלום',refuse:1}]}},
- {id:'raam',name:'רע״מ',short:'רע״מ',color:'#2E9E6A',base:4.9,sd:.9,pos:1,x:1.5,y:7,bluff:.4,rel:.75,cares:{},
-  card:{demand:'תוכנית חומש נגד הפשיעה בחברה הערבית, ותפקיד סגן שר.',opts:[
-   {t:'מקבל/ת: תוכנית חומש וסגן שר',sure:1,ports:['סגן שר']},
-   {t:'תוכנית חומש מצומצמת, בלי תפקיד',base:.5},
-   {t:'סגן שר, בלי תוכנית החומש',base:.35,ports:['סגן שר']},
-   {t:'לא עכשיו. נדבר אחרי ההשבעה',refuse:1}]}},
- {id:'dems',name:'הדמוקרטים',short:'הדמוקרטים',color:'#D94E4E',base:9.9,sd:1.3,pos:2,x:1,y:0,bluff:.3,rel:.85,cares:{security:'deal'},
-  card:{demand:'תיק המשפטים, ומחויבות לפתוח בשיחות מדיניות.',opts:[
-   {t:'מקבל/ת את שני התנאים',sure:1,ports:['משפטים'],issue:{security:'deal'}},
-   {t:'תיק המשפטים, ונוסח עמום על שיחות',base:.45,ports:['משפטים']},
-   {t:'מחויבות לשיחות, ותיק החינוך במקום המשפטים',base:.5,ports:['חינוך'],issue:{security:'deal'}},
-   {t:'בלי התחייבויות',refuse:1}]}},
- {id:'yashar',name:'ישר!',short:'ישר!',color:'#0E9AA7',base:23.9,sd:2,pos:3,x:4,y:2,bluff:.2,rel:.9,cares:{},
-  card:{demand:'ממשלת אחדות ברוטציה: איזנקוט ראשון, ותיק הביטחון לישר!.',opts:[
-   {t:'מקבל/ת: רוטציה, והם ראשונים',sure:1,ports:['ביטחון'],rot:'them'},
-   {t:'רוטציה שבה את/ה ראשון/ה, והביטחון להם',base:.35,ports:['ביטחון'],rot:'me'},
-   {t:'בלי רוטציה, אבל ביטחון וחוץ',base:.22,ports:['ביטחון','חוץ']},
-   {t:'אין רוטציה ואין מתנות',refuse:1}]}},
- {id:'together',name:'ביחד',short:'ביחד',color:'#7A4FD0',base:13,sd:1.6,pos:4,x:5,y:3,bluff:.35,rel:.8,cares:{draft:'draft'},
-  card:{demand:'תיק החוץ, וחוק גיוס שוויוני כתנאי לכניסה.',opts:[
-   {t:'מקבל/ת את שני התנאים',sure:1,ports:['חוץ'],issue:{draft:'draft'}},
-   {t:'תיק החוץ, ונוסח עמום בגיוס',base:.45,ports:['חוץ']},
-   {t:'חוק גיוס, ותיק הכלכלה במקום החוץ',base:.5,ports:['כלכלה'],issue:{draft:'draft'}},
-   {t:'לא מתחייב/ת לכלום',refuse:1}]}},
- {id:'indy',name:'ח״כ עצמאי',short:'הח״כ העצמאי',color:'#8A94A6',base:0,sd:0,pos:5.5,x:5.5,y:5,bluff:0,rel:.6,cares:{}},
- {id:'yb',name:'ישראל ביתנו',short:'ישראל ביתנו',color:'#6F9A2E',base:8.4,sd:1.2,pos:5,x:6,y:0,bluff:.45,rel:.8,cares:{draft:'draft'},
-  card:{demand:'תיק האוצר, וחוק גיוס לכולם.',opts:[
-   {t:'מקבל/ת את שני התנאים',sure:1,ports:['אוצר'],issue:{draft:'draft'}},
-   {t:'האוצר, ונוסח עמום בגיוס',base:.4,ports:['אוצר']},
-   {t:'חוק גיוס, ותיק האנרגיה במקום האוצר',base:.45,ports:['אנרגיה'],issue:{draft:'draft'}},
-   {t:'לא מתחייב/ת לכלום',refuse:1}]}},
- {id:'likud',name:'הליכוד',short:'הליכוד',color:'#2B5DB8',base:22.7,sd:2,pos:6,x:7.5,y:5,bluff:.2,rel:.9,cares:{},
-  card:{demand:'ממשלת אחדות ברוטציה: נתניהו ראשון, ותיק האוצר לליכוד.',opts:[
-   {t:'מקבל/ת: רוטציה, והם ראשונים',sure:1,ports:['אוצר'],rot:'them'},
-   {t:'רוטציה שבה את/ה ראשון/ה, והאוצר להם',base:.35,ports:['אוצר'],rot:'me'},
-   {t:'בלי רוטציה, אבל אוצר וחוץ',base:.22,ports:['אוצר','חוץ']},
-   {t:'אין רוטציה ואין מתנות',refuse:1}]}},
- {id:'winter',name:'עמך ישראל',short:'עמך ישראל',color:'#9A6444',base:5.1,sd:1.2,pos:7,x:8.5,y:6,bluff:.4,rel:.7,cares:{draft:'draft',security:'hawk'},
-  card:{demand:'חוק גיוס לכולם, ומושב בקבינט המדיני-ביטחוני.',opts:[
-   {t:'מקבל/ת את שני התנאים',sure:1,ports:['מושב בקבינט'],issue:{draft:'draft'}},
-   {t:'מושב בקבינט, ונוסח עמום בגיוס',base:.45,ports:['מושב בקבינט']},
-   {t:'חוק גיוס, ותקציב למילואימניקים במקום הקבינט',base:.5,issue:{draft:'draft'}},
-   {t:'לא מתחייב/ת לכלום',refuse:1}]}},
- {id:'shas',name:'ש״ס',short:'ש״ס',color:'#C08A1E',base:8,sd:1,pos:8,x:7,y:9.5,bluff:.35,rel:.85,cares:{draft:'exempt'},
-  card:{demand:'תיק הפנים, וחוק שמעגן את מעמד לומדי התורה.',opts:[
-   {t:'מקבל/ת את שני התנאים',sure:1,ports:['פנים'],issue:{draft:'exempt'}},
-   {t:'תיק הפנים, ונוסח עמום בחוק',base:.45,ports:['פנים']},
-   {t:'החוק, ותיק הרווחה במקום הפנים',base:.5,ports:['רווחה'],issue:{draft:'exempt'}},
-   {t:'לא מתחייב/ת לכלום',refuse:1}]}},
- {id:'utj',name:'יהדות התורה',short:'יהדות התורה',color:'#6B7280',base:7.6,sd:.8,pos:9,x:6.5,y:10,bluff:.3,rel:.85,cares:{draft:'exempt'},
-  card:{demand:'ראשות ועדת הכספים, וחוק שמעגן פטור מגיוס.',opts:[
-   {t:'מקבל/ת את שני התנאים',sure:1,ports:['ועדת הכספים'],issue:{draft:'exempt'}},
-   {t:'ועדת הכספים, ונוסח עמום בחוק',base:.4,ports:['ועדת הכספים']},
-   {t:'החוק, ותיק השיכון במקום הוועדה',base:.45,ports:['שיכון'],issue:{draft:'exempt'}},
-   {t:'לא מתחייב/ת לכלום',refuse:1}]}},
- {id:'rzp',name:'הציונות הדתית',short:'הציונות הדתית',color:'#B39B1C',base:3.8,sd:1.1,pos:10,x:9.5,y:9,bluff:.4,rel:.8,cares:{security:'hawk'},
-  card:{demand:'שר נוסף במשרד הביטחון, ומדיניות ביטחון נוקשה.',opts:[
-   {t:'מקבל/ת את שני התנאים',sure:1,ports:['שר במשרד הביטחון'],issue:{security:'hawk'}},
-   {t:'השר במשרד הביטחון, ונוסח עמום',base:.45,ports:['שר במשרד הביטחון']},
-   {t:'מדיניות נוקשה, ותיק החקלאות במקום',base:.5,ports:['חקלאות'],issue:{security:'hawk'}},
-   {t:'לא מתחייב/ת לכלום',refuse:1}]}},
- {id:'otzma',name:'עוצמה יהודית',short:'עוצמה יהודית',color:'#E0892B',base:7.4,sd:1.1,pos:11,x:10,y:8,bluff:.45,rel:.75,cares:{security:'hawk'},
-  card:{demand:'תיק הביטחון הלאומי, ומדיניות ביטחון נוקשה.',opts:[
-   {t:'מקבל/ת את שני התנאים',sure:1,ports:['ביטחון לאומי'],issue:{security:'hawk'}},
-   {t:'ביטחון לאומי, ונוסח עמום במדיניות',base:.4,ports:['ביטחון לאומי']},
-   {t:'מדיניות נוקשה, ותיק הנגב והגליל במקום',base:.45,ports:['הנגב והגליל'],issue:{security:'hawk'}},
-   {t:'לא מתחייב/ת לכלום',refuse:1}]}}
+  ports:[['תיק המשפטים','משפטים'],['תיק החוץ','חוץ']],
+  alts:[['תיק התיירות','תיירות'],['תיק המדע','מדע']],
+  asks:[{t:'מינויים מקצועיים בשירות הציבורי',short:'סוגיית המינויים',b:'והצהרה כללית על מינויים מקצועיים',w:"יצאנו מהבית הפוליטי שלנו בדיוק בגלל הנושא הזה. בלי זה אין סיבה שנהיה כאן."},
+                {t:'תפקיד בכיר נוסף לנציג מטעמם',short:'התפקיד הנוסף',b:'ותפקיד זוטר יותר',w:"אנחנו שני אנשים עם ותק. שני תפקידים זה לא מוגזם."}]},
+ {id:'likud',name:'הליכוד',short:'הליכוד',color:'#2B5DB8',base:22.7,sd:2,pos:6,x:7.5,y:5,bluff:.2,rel:.9,
+  ports:[['תיק האוצר','אוצר'],['תיק החוץ','חוץ']],
+  alts:[['תיק התחבורה','תחבורה'],['תיק הכלכלה','כלכלה']],
+  asks:[{t:'רוטציה בראשות הממשלה, כשהם ראשונים',short:'רוטציה',b:'ורוטציה שבה את/ה ראשון/ה',rot:1,w:"אנחנו המפלגה הגדולה במחנה. ראשות הממשלה מתחילה אצלנו."},
+                {t:'הסכמה מראש על מינויים בכירים',short:'ההסכמה על המינויים',b:'והתייעצות על מינויים, בלי זכות וטו',w:"ראינו מה קורה כשלא מסכימים על זה מראש. הפעם זה ייסגר בכתב."}]},
+ {id:'winter',name:'עמך ישראל',short:'עמך ישראל',color:'#9A6444',base:5.1,sd:1.2,pos:7,x:8.5,y:6,bluff:.4,rel:.7,
+  ports:[['מושב בקבינט המדיני-ביטחוני','מושב בקבינט'],['תיק המורשת','מורשת']],
+  alts:[['תיק ההתיישבות','התיישבות'],['תפקיד סגן שר בביטחון','סגן שר בביטחון']],
+  asks:[{t:'חוק גיוס לכולם',short:'חוק הגיוס',b:'ונוסח עמום בחוק הגיוס',issue:{draft:'draft'},w:"הצבא צריך חיילים, ולא ועדות. לשם כך נכנסנו לפוליטיקה."},
+                {t:'מדיניות ביטחון נוקשה',short:'מדיניות הביטחון',b:'ונוסח עמום במדיניות הביטחון',issue:{security:'hawk'},w:"הניסיון בשטח אומר שרק מדיניות ברורה עובדת. בלי זה אנחנו מיותרים."}]},
+ {id:'shas',name:'ש״ס',short:'ש״ס',color:'#C08A1E',base:8,sd:1,pos:8,x:7,y:9.5,bluff:.35,rel:.85,
+  ports:[['תיק הפנים','פנים'],['תיק הדתות','דתות']],
+  alts:[['תיק הרווחה','רווחה'],['תיק הפריפריה','פריפריה']],
+  asks:[{t:'חוק שמעגן את מעמד לומדי התורה',short:'חוק הגיוס',b:'ונוסח עמום בחוק לומדי התורה',issue:{draft:'exempt'},w:"עולם התורה הוא הנשמה של העם. את זה אנחנו לא נשאיר בלי עיגון בחוק."},
+                {t:'תקציב רב-שנתי לחינוך העצמאי',short:'תקציב החינוך העצמאי',b:'ומחצית מהתוספת התקציבית',trust:-3,w:"החינוך שלנו מתוקצב בחסר שנים. זה תיקון עוול, לא מתנה."}]},
+ {id:'utj',name:'יהדות התורה',short:'יהדות התורה',color:'#6B7280',base:7.6,sd:.8,pos:9,x:6.5,y:10,bluff:.3,rel:.85,
+  ports:[['ראשות ועדת הכספים','ועדת הכספים'],['תיק השיכון','שיכון']],
+  alts:[['תפקיד סגן שר בבריאות','סגן שר בבריאות'],['תיק הפריפריה','פריפריה']],
+  asks:[{t:'חוק שמעגן פטור מגיוס',short:'חוק הגיוס',b:'ונוסח עמום בחוק הגיוס',issue:{draft:'exempt'},w:"בלי חוק, כל סיכום כאן יתפוצץ בבית המשפט בתוך שנה."},
+                {t:'שמירה על הסטטוס קוו בענייני דת ומדינה',short:'הסטטוס קוו',b:'והצהרה כללית על הסטטוס קוו',w:"הסטטוס קוו נשמר מאז קום המדינה. אנחנו לא נהיה הממשלה שתשנה אותו."}]},
+ {id:'noam',name:'נעם',short:'נעם',color:'#8E24AA',base:.8,sd:.7,pos:9.2,x:9.5,y:10,bluff:.4,rel:.75,
+  ports:[['תפקיד סגן שר בחינוך','סגן שר בחינוך'],['ראשות ועדה לענייני משפחה','ועדת המשפחה']],
+  alts:[['תפקיד סגן שר בדתות','סגן שר בדתות'],['תיק המורשת','מורשת']],
+  asks:[{t:'חוק שמעגן פטור מגיוס',short:'חוק הגיוס',b:'ונוסח עמום בחוק',issue:{draft:'exempt'},w:"הציבור שלנו שלח אותנו לשמור על הנושא הזה, ואין לנו רשות לוותר עליו."},
+                {t:'תקציב לתוכניות חינוך מסורתי',short:'התקציב לחינוך המסורתי',b:'ותקציב מצומצם',trust:-2,w:"אנחנו מבקשים תקציב, לא מהפכה."}]},
+ {id:'zehut',name:'זהות',short:'זהות',color:'#C2560F',base:2.2,sd:.9,pos:8.2,x:8,y:6,bluff:.45,rel:.65,
+  ports:[['תיק הכלכלה','כלכלה'],['תיק התיירות','תיירות']],
+  alts:[['תיק המדע','מדע'],['תפקיד סגן שר באוצר','סגן שר באוצר']],
+  asks:[{t:'רפורמה כלכלית ליברלית',short:'הרפורמה',b:'ורפורמה מצומצמת',w:"בלי רפורמה כלכלית אמיתית, כל השאר הוא ניהול של אותו כשל."},
+                {t:'מדיניות ביטחון נוקשה',short:'מדיניות הביטחון',b:'ונוסח עמום במדיניות',issue:{security:'hawk'},w:"הבוחרים שלנו רוצים לראות עמדה ברורה, לא נוסחאות."}]},
+ {id:'rzp',name:'הציונות הדתית',short:'הציונות הדתית',color:'#B39B1C',base:3.8,sd:1.1,pos:10,x:9.5,y:9,bluff:.4,rel:.8,
+  ports:[['שר נוסף במשרד הביטחון','שר במשרד הביטחון'],['תיק החקלאות','חקלאות']],
+  alts:[['תיק המדע','מדע'],['תיק ההתיישבות','התיישבות']],
+  asks:[{t:'מדיניות ביטחון נוקשה',short:'מדיניות הביטחון',b:'ונוסח עמום במדיניות הביטחון',issue:{security:'hawk'},w:"ההתיישבות היא לב התנועה שלנו. בלי מדיניות ברורה אין לנו מה לחפש בממשלה."},
+                {t:'תקציב רב-שנתי להתיישבות',short:'תקציב ההתיישבות',b:'ותוספת תקציב חלקית',trust:-2,w:"תקציב חד-פעמי לא בונה כלום. אנחנו צריכים התחייבות לשנים."}]},
+ {id:'otzma',name:'עוצמה יהודית',short:'עוצמה יהודית',color:'#E0892B',base:7.4,sd:1.1,pos:11,x:10,y:8,bluff:.45,rel:.75,
+  ports:[['התיק לביטחון לאומי','ביטחון לאומי'],['תיק הפנים','פנים']],
+  alts:[['תיק הנגב והגליל','הנגב והגליל'],['תיק המורשת','מורשת']],
+  asks:[{t:'מדיניות ביטחון נוקשה',short:'מדיניות הביטחון',b:'ונוסח עמום במדיניות הביטחון',issue:{security:'hawk'},w:"הבוחרים שלנו דרשו קו ברור בביטחון. זו כל הסיבה שאנחנו כאן."},
+                {t:'הרחבת סמכויות המשמר הלאומי',short:'המשמר הלאומי',b:'ודיון על הסמכויות, בלי החלטה',w:"התחלנו את המהלך הזה, ואנחנו מתכוונים להשלים אותו."}]}
 ];
-P.forEach(p=>{p.cares=p.cares||{}});
+const ACC=['מקבל/ת את הכל','סגור. שני התנאים מאושרים','מסכים/ה לתנאים שלהם','נותן/ת להם בדיוק את מה שביקשו'];
+const REF=['לא מתחייב/ת לכלום','אין מתנות. שיחליטו','זה לא על השולחן','מסרב/ת לדרישות'];
+P.forEach(p=>{p.cares={};for(const a of (p.asks||[])) Object.assign(p.cares,a.issue||{})});
 const AFFX={'likud|yashar':12,'likud|together':25,'likud|yb':22,'dems|likud':8,'likud|raam':18,
  'shas|yb':18,'utj|yb':15,'shas|winter':30,'utj|winter':25,'raam|winter':20,'dems|winter':20,
  'shas|together':35,'together|utj':30,'shas|yashar':32,'utj|yashar':25,'dems|shas':12,'dems|utj':12,
@@ -570,12 +672,28 @@ let S=null;
 function newGame(code,cand){
   const seats=drawSeats(code,cand);
   S={code,cand,r:(codeSeed(code)^(cand==='likud'?0x9E3779B9:0x85EBCA6B))>>>0,seats,ps:{},days:28,ext:false,trust:60,commits:{},ports:{},rot:null,doubles:[],
-     meetings:0,evDone:[],screen:'night',sheet:null,swear:null};
+     meetings:0,evDone:[],screen:'night',sheet:null,swear:null,cards:{}};
   for(const p of P){ if(!seats[p.id]) continue;
+    if(p.asks) S.cards[p.id]=buildCard(p);
     S.ps[p.id]={sat:affinity(p.id,cand),st:p.id===cand?'self':(p.never?'never':'open'),firm:[]};
   }
   render();
 }
+const pick=a=>a[Math.floor(rand()*a.length)];
+function buildCard(p){
+  const main=pick(p.ports),alt=pick(p.alts.filter(a=>a[1]!==main[1]))||p.alts[0],ask=pick(p.asks),j=()=>(rand()-.5)*.1;
+  const opts=[{t:pick(ACC),sure:1,ports:[main[1]],issue:ask.issue,rot:ask.rot?'them':undefined,trust:ask.trust}];
+  if(ask.rot){
+    opts.push({t:`${main[0]}, ${ask.b}`,base:.3+j(),ports:[main[1]],rot:'me'});
+    opts.push({t:`בלי רוטציה, אבל ${main[0]} ו${alt[0]}`,base:.2+j(),ports:[main[1],alt[1]]});
+  }else{
+    opts.push({t:`${main[0]}, ${ask.b}`,base:.44+j(),ports:[main[1]]});
+    opts.push({t:`${ask.short}, ו${alt[0]} במקום ${main[0]}`,base:.48+j(),ports:[alt[1]],issue:ask.issue,trust:ask.trust});
+  }
+  opts.push({t:pick(REF),refuse:1});
+  return {demand:`${main[0]}, ו${ask.t}.`,why:ask.w,opts};
+}
+const cardOf=id=>S.cards[id];
 const active=()=>P.filter(p=>S.seats[p.id]>0);
 const inCoal=id=>S.ps[id]&&(S.ps[id].st==='self'||S.ps[id].st==='signed');
 const coalSeats=()=>active().filter(p=>inCoal(p.id)).reduce((a,p)=>a+S.seats[p.id],0);
@@ -631,14 +749,19 @@ function sign(id,o,msgs){
   for(const k in (o.issue||{})) commitIssue(k,o.issue[k],id,msgs);
 }
 function resolve(id,idx){
-  const p=byId[id],q=S.ps[id],o=p.card.opts[idx],msgs=[];
+  const p=byId[id],q=S.ps[id],o=cardOf(id).opts[idx],msgs=[];
   const cost=3+Math.floor(rand()*3);S.days-=cost;S.meetings++;
   let head,tone;
+  const HD={bluff:['הם בלפו.','הבלוף התפוצץ להם בפנים.','הם ויתרו בלי לקבל כלום.'],
+    walk:['הם קמים מהשולחן.','הדלת נטרקה.','הפגישה נגמרה בצעקות.'],
+    sure:['סגרנו.','חתמו על ההסכם.','זה נסגר בלחיצת יד.'],
+    win:['זה עבד.','הם התקפלו.','אחרי שעתיים, סגרנו.'],
+    lose:['לא הסכימו.','הם קמו בלי לחתום.','הפגישה נגמרה בכלום.']};
   if(o.refuse){
-    if(rand()<p.bluff*q.sat/100){head='הם בלפו.';tone='good';sign(id,{},msgs);msgs.push(['חתמו בלי לקבל כלום.','good'])}
-    else{q.sat-=25;head='הם קמים מהשולחן.';tone='bad'; if(q.sat<25) leave(id,msgs); else msgs.push(['אפשר לנסות שוב, אבל הם כועסים.','warn'])}
-  }else if(o.sure||rand()<chance(o,id)){head=o.sure?'סגרנו.':'זה עבד.';tone='good';sign(id,o,msgs)}
-  else{q.sat-=12;head='לא הסכימו.';tone='bad'; if(q.sat<15) leave(id,msgs); else msgs.push(['הם עדיין ליד השולחן. אפשר לנסות שוב.','warn'])}
+    if(rand()<p.bluff*q.sat/100){head=pick(HD.bluff);tone='good';sign(id,{},msgs);msgs.push(['חתמו בלי לקבל כלום.','good'])}
+    else{q.sat-=25;head=pick(HD.walk);tone='bad'; if(q.sat<25) leave(id,msgs); else msgs.push(['אפשר לנסות שוב, אבל הם כועסים.','warn'])}
+  }else if(o.sure||rand()<chance(o,id)){head=pick(o.sure?HD.sure:HD.win);tone='good';sign(id,o,msgs)}
+  else{q.sat-=12;head=pick(HD.lose);tone='bad'; if(q.sat<15) leave(id,msgs); else msgs.push(['הם עדיין ליד השולחן. אפשר לנסות שוב.','warn'])}
   S.sheet={kind:'result',id,head,tone,msgs,cost};
   render();
 }
@@ -783,7 +906,7 @@ function renderBoard(){
   const outL=all.filter(p=>!inCoal(p.id)&&!isOpen(p.id));
   const dropped=P.filter(p=>p.base&&!S.seats[p.id]);
   const row=(p,kind)=>{const q=S.ps[p.id];let meta='';
-    if(kind==='open'){const [m,c]=moodOf(q.sat);meta=`<span class="mood" style="color:var(--${c==='acc'?'accent':c})">${m}</span> · ${esc(p.card.demand.split(',')[0])}`+(pivotal(p.id)?' · <b>בלעדיה אין 61</b>':'')}
+    if(kind==='open'){const [m,c]=moodOf(q.sat);meta=`<span class="mood" style="color:var(--${c==='acc'?'accent':c})">${m}</span> · ${esc(cardOf(p.id).demand.split(',')[0])}`+(pivotal(p.id)?' · <b>בלעדיה אין 61</b>':'')}
     else if(kind==='in'){meta='חתומה'+(q.firm.length?' · מחויבת: '+q.firm.map(k=>ISSUES[k][S.commits[k]]||'').join(', '):'')}
     else meta=q.st==='gone'?'עזבה את המשא ומתן':blockedBy(p.id)||'';
     return `<button class="prow ${kind}" ${kind==='open'?`data-act="meet" data-id="${p.id}"`:'disabled'} aria-label="${esc(p.name)}, ${S.seats[p.id]} מנדטים">
@@ -811,8 +934,8 @@ function renderSheet(){
   let body='';
   if(sh.kind==='meet'){const p=byId[sh.id],q=S.ps[sh.id],[m,c]=moodOf(q.sat);
     body=`<div class="row" style="justify-content:space-between;align-items:center"><div><div class="eyebrow">פגישה · ${S.seats[p.id]} מנדטים</div><h2 class="display">${p.name}</h2></div>${chip(['מצב רוח: '+m,c])}</div>
-     <div class="demand"><span class="eyebrow">צוות המשא ומתן דורש</span><div class="q">${esc(p.card.demand)}</div>${pivotal(p.id)?'<span class="chip bad" style="justify-self:start">הם יודעים שבלעדיהם אין לך 61</span>':''}</div>
-     <div class="opts">${p.card.opts.map((o,i)=>`<button class="opt" data-act="pick" data-i="${i}"><span class="t">${esc(o.t)}</span><span class="tags">${previewTags(o,p.id).map(chip).join('')}</span></button>`).join('')}</div>
+     <div class="demand"><span class="eyebrow">צוות המשא ומתן דורש</span><div class="q">${esc(cardOf(p.id).demand)}</div>${cardOf(p.id).why?`<p class="muted" style="font-size:14.5px;border-inline-start:3px solid var(--line);padding-inline-start:10px">${esc(cardOf(p.id).why)}</p>`:''}${pivotal(p.id)?'<span class="chip bad" style="justify-self:start">הם יודעים שבלעדיהם אין לך 61</span>':''}</div>
+     <div class="opts">${cardOf(p.id).opts.map((o,i)=>`<button class="opt" data-act="pick" data-i="${i}"><span class="t">${esc(o.t)}</span><span class="tags">${previewTags(o,p.id).map(chip).join('')}</span></button>`).join('')}</div>
      <button class="btn ghost" data-act="close">עוד לא. חזרה ללוח</button>`;}
   else if(sh.kind==='result'){body=`<div class="result"><div class="eyebrow">${byId[sh.id].name} · עברו ${sh.cost} ימים</div><div class="head display" style="color:var(--${sh.tone})">${sh.head}</div>
      <ul>${sh.msgs.map(([t,c])=>`<li style="color:var(--${c==='good'?'ink':c})">${esc(t)}</li>`).join('')}</ul></div><button class="btn" data-act="after">המשך</button>`;}
