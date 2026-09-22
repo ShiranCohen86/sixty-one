@@ -609,6 +609,138 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
 @media (max-width:380px){.stats .v{font-size:22px}.cands{grid-template-columns:1fr}}
 </style>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@700;900&family=Assistant:wght@400;600;700;800&display=swap">
+<style>
+:root{
+  --bg:#FFFFFF;--surface:#F1F5FD;--surface2:#E3EBFA;--ink:#0A1F5C;--muted:#4D5E87;--line:#C8D5F0;
+  --flag:#0038B8;--accent:#0038B8;--accent-soft:#DCE6FB;--on-accent:#FFFFFF;
+  --good:#17754A;--good-soft:#DDF1E6;--warn:#8F5400;--warn-soft:#F8EBD3;--bad:#B42318;--bad-soft:#F9E0DD;
+  --shadow:0 12px 32px rgba(10,31,92,.16);--scrim:rgba(10,31,92,.42);
+  color-scheme:light;
+}
+html,body{background:var(--bg);height:100%}
+#app::before,#app::after{content:"";display:block;height:30px;background:linear-gradient(to bottom,#fff 0 6px,var(--flag) 6px 16px,#fff 16px)}
+#app::after{transform:scaleY(-1)}
+.flag{display:block;width:112px;height:auto;filter:drop-shadow(0 4px 10px rgba(10,31,92,.18));border-radius:3px}
+.flag.sm{width:44px;filter:none;box-shadow:0 0 0 1px var(--line)}
+body{color:var(--ink);font-family:"Assistant",system-ui,"Segoe UI",Arial,sans-serif;font-size:clamp(15px,3.6vw,17px);line-height:1.5;-webkit-tap-highlight-color:transparent;overflow-x:hidden}
+*{box-sizing:border-box}
+.wrap{width:100%;max-width:560px;margin:0 auto;padding-inline:clamp(14px,4vw,24px);padding-block:18px 48px;display:flex;flex-direction:column;gap:clamp(14px,3vw,20px)}
+.cols{display:grid;gap:inherit;min-width:0}
+.cols > *{min-width:0;display:grid;gap:inherit;align-content:start}
+.display{font-family:"Frank Ruhl Libre","David Libre",Georgia,serif;font-weight:900;letter-spacing:-.01em}
+.num{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--muted)}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+/* intro */
+.hero{display:grid;gap:6px;justify-items:center;text-align:center;padding-top:8px}
+.hero .big{font-size:clamp(88px,26vw,170px);line-height:.85;color:var(--accent)}
+.hero h1{font-size:28px}
+.hero p{max-width:34ch;color:var(--muted)}
+.hemi{width:100%;max-width:min(100%,460px);margin:0 auto;display:block}
+.hemi-box{position:relative;display:grid;justify-items:center}
+.hemi-label{position:absolute;inset-inline:0;bottom:2%;text-align:center;line-height:1}
+.hemi-label .n{font-size:clamp(34px,11vw,52px)}
+.hemi-label .of{font-size:14px;color:var(--muted);font-weight:700}
+.cands{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:10px}
+.cand{background:#fff;border:2px solid var(--line);border-radius:14px;padding:14px;text-align:start;display:grid;gap:4px}
+.cand[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 3px var(--accent-soft)}
+.cand .who{font-weight:800;font-size:17px;line-height:1.2}
+.cand .sub{font-size:13px;color:var(--muted)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;vertical-align:middle;margin-inline-end:6px}
+.btn{border:0;border-radius:12px;padding:14px 18px;font-weight:800;font-size:17px;background:var(--accent);color:var(--on-accent);width:100%}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.btn.small{padding:10px 14px;font-size:15px;width:auto}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row > .btn{flex:1 1 160px}
+.rules{display:grid;gap:8px;background:var(--surface);border-radius:14px;padding:14px 16px;font-size:15px}
+.rules li{margin:0}
+.rules ul{margin:0;padding-inline-start:18px;display:grid;gap:4px}
+.fine{font-size:12.5px;color:var(--muted);line-height:1.55}
+.code-in{display:flex;gap:8px;align-items:center}
+.code-in input{flex:1;min-width:0;font:inherit;padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--ink);direction:ltr;text-align:center;letter-spacing:.1em;text-transform:uppercase}
+.linkbtn{background:none;border:0;color:var(--accent);font-weight:700;padding:4px 0;text-decoration:underline;text-underline-offset:3px}
+
+/* board */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--surface);border-radius:12px;padding:10px clamp(8px,2.5vw,14px);display:grid;gap:4px}
+.stat .v{font-size:clamp(20px,6vw,28px);font-weight:800;line-height:1}
+.stat .l{font-size:clamp(11px,3vw,12.5px);font-weight:700;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar{height:6px;border-radius:3px;background:var(--surface2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:3px;transition:width .4s}
+.bar.low i{background:var(--bad)}
+.commits{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:13px}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--surface2);color:var(--muted);white-space:nowrap}
+.chip.good{background:var(--good-soft);color:var(--good)}
+.chip.warn{background:var(--warn-soft);color:var(--warn)}
+.chip.bad{background:var(--bad-soft);color:var(--bad)}
+.chip.acc{background:var(--accent-soft);color:var(--accent)}
+.list{display:grid;gap:6px}
+.prow{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;background:var(--surface);border:0;border-radius:12px;padding:11px 12px;text-align:start;width:100%}
+.prow:disabled{cursor:default;opacity:.62}
+.prow .sw{width:14px;height:14px;border-radius:4px}
+.prow .nm{font-weight:800;line-height:1.2}
+.prow .meta{font-size:13px;color:var(--muted)}
+.prow .seats{font-size:clamp(19px,5vw,23px);font-weight:800;min-width:2.2ch;text-align:center}
+.prow{min-height:56px}
+.btn,.opt,.cand{min-height:48px}
+.prow.open{box-shadow:inset 0 0 0 2px transparent}
+.prow.open:hover{box-shadow:inset 0 0 0 2px var(--accent)}
+.sect{font-size:13px;font-weight:800;color:var(--muted);letter-spacing:.04em;margin-top:4px}
+.banner{background:var(--accent-soft);color:var(--ink);border-radius:12px;padding:12px 14px;display:grid;gap:10px}
+
+/* sheet */
+.scrim{position:fixed;inset:0;background:var(--scrim);display:flex;align-items:flex-end;justify-content:center;z-index:10;animation:fade .18s ease-out}
+.sheet{background:var(--bg);border-top:8px solid var(--flag);width:100%;max-width:560px;max-height:92%;overflow:auto;border-radius:20px 20px 0 0;padding-inline:16px;padding-block:18px calc(22px + env(safe-area-inset-bottom,0px));display:grid;gap:14px;box-shadow:var(--shadow);animation:up .22s ease-out}
+.sheet h2{font-size:clamp(20px,5.5vw,26px)}
+.demand{background:var(--surface);border-radius:14px;padding:14px 16px;display:grid;gap:6px}
+.demand .q{font-size:clamp(17px,4.6vw,20px);font-weight:700;line-height:1.35}
+.opts{display:grid;gap:8px}
+.opt{background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:12px 14px;text-align:start;display:grid;gap:8px;width:100%}
+.opt:hover{border-color:var(--accent)}
+.opt .t{font-weight:800;font-size:16.5px;line-height:1.3}
+.tags{display:flex;gap:5px;flex-wrap:wrap}
+.result{background:var(--surface);border-radius:14px;padding:16px;display:grid;gap:8px}
+.result .head{font-size:22px}
+.result ul{margin:0;padding-inline-start:18px;display:grid;gap:4px}
+.mood{font-size:13px;font-weight:700}
+
+/* swear / end */
+.votes{display:grid;gap:6px}
+.vrow{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;background:var(--surface);border-radius:10px;padding:9px 12px;animation:up .3s ease-out both}
+.endcard{background:linear-gradient(to bottom,#fff 0 10px,var(--flag) 10px 20px,var(--surface) 20px);border-radius:18px;padding:36px 18px 20px;display:grid;gap:10px;text-align:center;justify-items:center}
+.endcard .title{font-size:clamp(24px,7vw,32px);line-height:1.1}
+.endcard .score{font-size:clamp(46px,14vw,68px);line-height:1;color:var(--accent)}
+.break{width:100%;display:grid;gap:4px;font-size:14.5px;text-align:start}
+.break div{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid var(--line);padding-block:5px}
+.sharebox{width:100%;font:inherit;font-size:14px;padding:10px;border-radius:10px;border:2px solid var(--line);background:var(--surface2);color:var(--ink);resize:none}
+
+.seat{animation:pop .35s ease-out both}
+@keyframes pop{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
+@keyframes up{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.seat,.scrim,.sheet,.vrow{animation:none}.bar i{transition:none}}
+@media (max-width:360px){.cands{grid-template-columns:1fr}.prow{padding:10px}.chip{font-size:11.5px;padding:2px 7px}}
+@media (min-width:760px){
+  .wrap{max-width:900px}
+  .cols{grid-template-columns:minmax(0,360px) minmax(0,1fr);align-items:start}
+  .cols > .col-a{position:sticky;top:calc(12px + env(safe-area-inset-top,0px))}
+  .scrim{align-items:center;padding:24px}
+  .sheet{border-radius:20px;border-top-width:10px;max-width:640px;max-height:86vh;padding-block:20px 22px;animation:fade .18s ease-out}
+  .hero .big{font-size:150px}
+}
+@media (min-width:1100px){ .wrap{max-width:1040px} .cols{grid-template-columns:minmax(0,420px) minmax(0,1fr)} }
+@media (max-height:520px) and (orientation:landscape){ .hero{padding-top:0} .hero .big{font-size:72px} .flag{width:72px} .sheet{max-height:94vh} }
+</style>
+
 <div id="app"></div>
 
 <script>
@@ -1049,7 +1181,7 @@ function renderBoard(){
     else meta=q.st==='gone'?'עזבה את המשא ומתן':blockedBy(p.id)||'';
     return `<button class="prow ${kind}" ${kind==='open'?`data-act="meet" data-id="${p.id}"`:'disabled'} aria-label="${esc(p.name)}, ${S.seats[p.id]} מנדטים">
       <span class="sw" style="background:${p.color}"></span><span><span class="nm">${p.name}</span><br><span class="meta">${meta}</span></span><span class="seats num">${S.seats[p.id]}</span></button>`};
-  return `<div class="wrap">
+  return `<div class="wrap"><div class="cols"><div class="col-a">
     <div class="stats">
       <div class="stat"><span class="l">${S.ext?'ימי הארכה':'ימים למנדט'}</span><span class="v num">${Math.max(0,S.days)}</span><div class="bar ${S.days<=6?'low':''}"><i style="width:${Math.max(0,S.days)/daysMax*100}%"></i></div></div>
       <div class="stat"><span class="l">אמון הציבור</span><span class="v num">${S.trust}</span><div class="bar ${S.trust<35?'low':''}"><i style="width:${S.trust}%"></i></div></div>
@@ -1058,12 +1190,14 @@ function renderBoard(){
     <div class="hemi-box">${hemi('coal')}<div class="hemi-label"><div class="n display num" style="color:${seats>=61?'var(--good)':'var(--ink)'}">${seats}</div><div class="of">${seats>=61?'יש רוב':'חסרים '+(61-seats)}</div></div></div>
     ${commits?`<div class="commits"><span class="muted">הבטחת:</span>${commits}</div>`:''}
     ${seats>=61?`<div class="banner"><div><b>יש לך ${seats} חתומים.</b> אפשר ללכת להשבעה, או להרחיב את הרוב כדי לצמצם סיכון לערקים.</div><button class="btn" data-act="swear">להשבעה בכנסת</button></div>`:''}
+    </div><div class="col-b">
     ${openL.length?`<div class="sect">במשא ומתן · בחר/י מפלגה לפגישה</div><div class="list">${openL.map(p=>row(p,'open')).join('')}</div>`:''}
     <div class="sect">בקואליציה</div><div class="list">
       <div class="prow" style="opacity:1"><span class="sw" style="background:${byId[S.cand].color}"></span><span><span class="nm">${byId[S.cand].name}</span><br><span class="meta">המפלגה שלך</span></span><span class="seats num">${S.seats[S.cand]}</span></div>
       ${inL.map(p=>row(p,'in')).join('')}</div>
     ${outL.length||dropped.length?`<div class="sect">מחוץ לתמונה</div><div class="list">${outL.map(p=>row(p,'out')).join('')}
       ${dropped.map(p=>`<button class="prow" disabled><span class="sw" style="background:${p.color}"></span><span><span class="nm">${p.name}</span><br><span class="meta">לא עברה את אחוז החסימה</span></span><span class="seats num">0</span></button>`).join('')}</div>`:''}
+    </div></div>
     <p class="fine">קוד הגרלה: <span class="num" dir="ltr">${S.code}</span></p>
   </div>`;
 }
