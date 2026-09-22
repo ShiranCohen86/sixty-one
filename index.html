@@ -491,6 +491,124 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
 @media (max-width:380px){.stats .v{font-size:22px}.cands{grid-template-columns:1fr}}
 </style>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@700;900&family=Assistant:wght@400;600;700;800&display=swap">
+<style>
+:root{
+  --bg:#FFFFFF;--surface:#F1F5FD;--surface2:#E3EBFA;--ink:#0A1F5C;--muted:#4D5E87;--line:#C8D5F0;
+  --flag:#0038B8;--accent:#0038B8;--accent-soft:#DCE6FB;--on-accent:#FFFFFF;
+  --good:#17754A;--good-soft:#DDF1E6;--warn:#8F5400;--warn-soft:#F8EBD3;--bad:#B42318;--bad-soft:#F9E0DD;
+  --shadow:0 12px 32px rgba(10,31,92,.16);--scrim:rgba(10,31,92,.42);
+  color-scheme:light;
+}
+html,body{background:var(--bg);height:100%}
+#app::before,#app::after{content:"";display:block;height:30px;background:linear-gradient(to bottom,#fff 0 6px,var(--flag) 6px 16px,#fff 16px)}
+#app::after{transform:scaleY(-1)}
+.flag{display:block;width:112px;height:auto;filter:drop-shadow(0 4px 10px rgba(10,31,92,.18));border-radius:3px}
+.flag.sm{width:44px;filter:none;box-shadow:0 0 0 1px var(--line)}
+body{color:var(--ink);font-family:"Assistant",system-ui,"Segoe UI",Arial,sans-serif;font-size:16px;line-height:1.5;-webkit-tap-highlight-color:transparent}
+*{box-sizing:border-box}
+.wrap{max-width:560px;margin:0 auto;padding-inline:16px;padding-block:18px 48px;display:flex;flex-direction:column;gap:18px}
+.display{font-family:"Frank Ruhl Libre","David Libre",Georgia,serif;font-weight:900;letter-spacing:-.01em}
+.num{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--muted)}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+/* intro */
+.hero{display:grid;gap:6px;justify-items:center;text-align:center;padding-top:8px}
+.hero .big{font-size:clamp(96px,30vw,150px);line-height:.85;color:var(--accent)}
+.hero h1{font-size:28px}
+.hero p{max-width:34ch;color:var(--muted)}
+.hemi{width:100%;max-width:100%;display:block}
+.hemi-box{position:relative}
+.hemi-label{position:absolute;inset-inline:0;bottom:2%;text-align:center;line-height:1}
+.hemi-label .n{font-size:clamp(34px,11vw,52px)}
+.hemi-label .of{font-size:14px;color:var(--muted);font-weight:700}
+.cands{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cand{background:#fff;border:2px solid var(--line);border-radius:14px;padding:14px;text-align:start;display:grid;gap:4px}
+.cand[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 3px var(--accent-soft)}
+.cand .who{font-weight:800;font-size:17px;line-height:1.2}
+.cand .sub{font-size:13px;color:var(--muted)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;vertical-align:middle;margin-inline-end:6px}
+.btn{border:0;border-radius:12px;padding:14px 18px;font-weight:800;font-size:17px;background:var(--accent);color:var(--on-accent);width:100%}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.btn.small{padding:10px 14px;font-size:15px;width:auto}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row > .btn{flex:1 1 160px}
+.rules{display:grid;gap:8px;background:var(--surface);border-radius:14px;padding:14px 16px;font-size:15px}
+.rules li{margin:0}
+.rules ul{margin:0;padding-inline-start:18px;display:grid;gap:4px}
+.fine{font-size:12.5px;color:var(--muted);line-height:1.55}
+.code-in{display:flex;gap:8px;align-items:center}
+.code-in input{flex:1;min-width:0;font:inherit;padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--ink);direction:ltr;text-align:center;letter-spacing:.1em;text-transform:uppercase}
+.linkbtn{background:none;border:0;color:var(--accent);font-weight:700;padding:4px 0;text-decoration:underline;text-underline-offset:3px}
+
+/* board */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--surface);border-radius:12px;padding:10px 12px;display:grid;gap:4px}
+.stat .v{font-size:26px;font-weight:800;line-height:1}
+.stat .l{font-size:12px;font-weight:700;color:var(--muted)}
+.bar{height:6px;border-radius:3px;background:var(--surface2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:3px;transition:width .4s}
+.bar.low i{background:var(--bad)}
+.commits{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:13px}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--surface2);color:var(--muted);white-space:nowrap}
+.chip.good{background:var(--good-soft);color:var(--good)}
+.chip.warn{background:var(--warn-soft);color:var(--warn)}
+.chip.bad{background:var(--bad-soft);color:var(--bad)}
+.chip.acc{background:var(--accent-soft);color:var(--accent)}
+.list{display:grid;gap:6px}
+.prow{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;background:var(--surface);border:0;border-radius:12px;padding:11px 12px;text-align:start;width:100%}
+.prow:disabled{cursor:default;opacity:.62}
+.prow .sw{width:14px;height:14px;border-radius:4px}
+.prow .nm{font-weight:800;line-height:1.2}
+.prow .meta{font-size:13px;color:var(--muted)}
+.prow .seats{font-size:22px;font-weight:800;min-width:2ch;text-align:center}
+.prow.open{box-shadow:inset 0 0 0 2px transparent}
+.prow.open:hover{box-shadow:inset 0 0 0 2px var(--accent)}
+.sect{font-size:13px;font-weight:800;color:var(--muted);letter-spacing:.04em;margin-top:4px}
+.banner{background:var(--accent-soft);color:var(--ink);border-radius:12px;padding:12px 14px;display:grid;gap:10px}
+
+/* sheet */
+.scrim{position:fixed;inset:0;background:var(--scrim);display:flex;align-items:flex-end;justify-content:center;z-index:10;animation:fade .18s ease-out}
+.sheet{background:var(--bg);border-top:8px solid var(--flag);width:100%;max-width:560px;max-height:92%;overflow:auto;border-radius:20px 20px 0 0;padding-inline:16px;padding-block:18px calc(22px + env(safe-area-inset-bottom,0px));display:grid;gap:14px;box-shadow:var(--shadow);animation:up .22s ease-out}
+.sheet h2{font-size:24px}
+.demand{background:var(--surface);border-radius:14px;padding:14px 16px;display:grid;gap:6px}
+.demand .q{font-size:19px;font-weight:700;line-height:1.35}
+.opts{display:grid;gap:8px}
+.opt{background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:12px 14px;text-align:start;display:grid;gap:8px;width:100%}
+.opt:hover{border-color:var(--accent)}
+.opt .t{font-weight:800;font-size:16.5px;line-height:1.3}
+.tags{display:flex;gap:5px;flex-wrap:wrap}
+.result{background:var(--surface);border-radius:14px;padding:16px;display:grid;gap:8px}
+.result .head{font-size:22px}
+.result ul{margin:0;padding-inline-start:18px;display:grid;gap:4px}
+.mood{font-size:13px;font-weight:700}
+
+/* swear / end */
+.votes{display:grid;gap:6px}
+.vrow{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;background:var(--surface);border-radius:10px;padding:9px 12px;animation:up .3s ease-out both}
+.endcard{background:linear-gradient(to bottom,#fff 0 10px,var(--flag) 10px 20px,var(--surface) 20px);border-radius:18px;padding:36px 18px 20px;display:grid;gap:10px;text-align:center;justify-items:center}
+.endcard .title{font-size:30px;line-height:1.1}
+.endcard .score{font-size:64px;line-height:1;color:var(--accent)}
+.break{width:100%;display:grid;gap:4px;font-size:14.5px;text-align:start}
+.break div{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid var(--line);padding-block:5px}
+.sharebox{width:100%;font:inherit;font-size:14px;padding:10px;border-radius:10px;border:2px solid var(--line);background:var(--surface2);color:var(--ink);resize:none}
+
+.seat{animation:pop .35s ease-out both}
+@keyframes pop{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
+@keyframes up{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.seat,.scrim,.sheet,.vrow{animation:none}.bar i{transition:none}}
+@media (max-width:380px){.stats .v{font-size:22px}.cands{grid-template-columns:1fr}}
+</style>
+
 <div id="app"></div>
 
 <script>
@@ -512,93 +630,105 @@ const P=[
   ports:[['ראשות ועדת הבריאות','ועדת הבריאות'],['תפקיד סגן שר בבריאות','סגן שר בבריאות']],
   alts:[['תיק הגנת הסביבה','הגנת הסביבה'],['תיק התיירות','תיירות']],
   asks:[{t:'לגליזציה מלאה של קנאביס',short:'הלגליזציה',b:'וועדה שתבחן לגליזציה',w:"הבוחרים שלנו שלחו אותנו לכנסת בשביל הסעיף הזה. בלעדיו אין לנו מה להסביר להם."},
-                {t:'שחרור אסירים בעבירות קנאביס קלות',short:'מהלך השחרור',b:'ובחינה פרטנית של התיקים',w:"יש אלפי תיקים פליליים על כמויות קטנות. זה מה שהבטחנו לתקן."}]},
+                {t:'שחרור אסירים בעבירות קנאביס קלות',short:'מהלך השחרור',b:'ובחינה פרטנית של התיקים',w:"יש אלפי תיקים פליליים על כמויות קטנות. זה מה שהבטחנו לתקן."},
+        {t:"הקמת ועדת שרים לרפורמה בקנאביס הרפואי",short:"ועדת השרים",b:"וצוות מקצועי במקום ועדת שרים",w:"חולים מחכים שנים לרישיון. זה הדבר הכי פשוט שאפשר לעשות.",news:1}]},
  {id:'raam',name:'רע״מ',short:'רע״מ',color:'#2E9E6A',base:4.9,sd:.9,pos:1,x:1.5,y:7,bluff:.4,rel:.75,
   ports:[['תפקיד סגן שר','סגן שר'],['ראשות ועדת הפנים','ועדת הפנים']],
   alts:[['תפקיד סגן שר בבריאות','סגן שר בבריאות'],['תיק הפריפריה','פריפריה']],
   asks:[{t:'תוכנית חומש נגד הפשיעה בחברה הערבית',short:'תוכנית החומש',b:'ותוכנית חומש מצומצמת',w:"הפשיעה היא סיבת המוות מספר אחת בציבור שלנו. בלי תקציב, הישיבה הזו לא שווה כלום."},
-                {t:'הסדרת מעמד הכפרים הלא-מוכרים בנגב',short:'ההסדרה בנגב',b:'וועדה שתבחן את ההסדרה',w:"עשרות אלפי אנשים חיים בלי חשמל וכתובת. אנחנו לא יכולים לחזור בלי הסדרה."}]},
+                {t:'הסדרת מעמד הכפרים הלא-מוכרים בנגב',short:'ההסדרה בנגב',b:'וועדה שתבחן את ההסדרה',w:"עשרות אלפי אנשים חיים בלי חשמל וכתובת. אנחנו לא יכולים לחזור בלי הסדרה."},
+        {t:"תפקיד ממשלתי לסגלוביץ׳, הח״כ היהודי שמתמודד ברשימה",short:"התפקיד לסגלוביץ׳",b:"ותפקיד בוועדה במקום",w:"הריצה המשותפת הזו היא תקדים. אנחנו צריכים שיהיה לה ביטוי.",news:1}]},
  {id:'dems',name:'הדמוקרטים',short:'הדמוקרטים',color:'#D94E4E',base:9.9,sd:1.3,pos:2,x:1,y:0,bluff:.3,rel:.85,
   ports:[['תיק המשפטים','משפטים'],['תיק החינוך','חינוך']],
   alts:[['תיק הבריאות','בריאות'],['תיק הגנת הסביבה','הגנת הסביבה']],
   asks:[{t:'מחויבות לפתוח בשיחות מדיניות',short:'השיחות המדיניות',b:'ונוסח עמום על שיחות מדיניות',issue:{security:'deal'},w:"הבטחנו לבוחרים שלנו שלא ניכנס לממשלה שסוגרת את הדלת לכל מהלך מדיני."},
-                {t:'ביטול חקיקה שנויה במחלוקת במערכת המשפט',short:'המהלך במערכת המשפט',b:'וועדה שתבחן את החקיקה',w:"זו הסיבה שהמפלגה הזו קמה. בלי זה אין לנו מנדט מהבוחרים שלנו."}]},
+                {t:'ביטול חקיקה שנויה במחלוקת במערכת המשפט',short:'המהלך במערכת המשפט',b:'וועדה שתבחן את החקיקה',w:"זו הסיבה שהמפלגה הזו קמה. בלי זה אין לנו מנדט מהבוחרים שלנו."},
+        {t:"התחייבות שלא לפגוע בתקציבי ארגוני חברה אזרחית",short:"ההתחייבות לתקציבים",b:"ובדיקה מחדש בעוד שנה",w:"הבוחרים שלנו רואים לאן נושבת הרוח. אנחנו חייבים גדר.",news:1}]},
  {id:'bw',name:'כחול לבן',short:'כחול לבן',color:'#1E4E8C',base:3.1,sd:1,pos:3.5,x:4.5,y:3,bluff:.3,rel:.85,
   ports:[['תיק הביטחון','ביטחון'],['תיק המשפטים','משפטים']],
   alts:[['תיק החוץ','חוץ'],['תיק הבריאות','בריאות']],
   asks:[{t:'הקמת ועדת חקירה ממלכתית',short:'ועדת החקירה',b:'וועדה ממשלתית במקום ועדת חקירה',w:"הציבור דורש תשובות על מה שקרה. ועדה ממלכתית היא תנאי שלא מתמקחים עליו."},
-                {t:'מחויבות לעצמאות בתי המשפט',short:'המחויבות לבתי המשפט',b:'והצהרה כללית בנושא',w:"אנחנו לא נשב בממשלה שתפגע בעצמאות בתי המשפט. זה קו אדום ציבורי."}]},
+                {t:'מחויבות לעצמאות בתי המשפט',short:'המחויבות לבתי המשפט',b:'והצהרה כללית בנושא',w:"אנחנו לא נשב בממשלה שתפגע בעצמאות בתי המשפט. זה קו אדום ציבורי."},
+        {t:"תפקיד לאליזה בלוך, שהצטרפה לרשימה ברגע האחרון",short:"התפקיד לבלוך",b:"ותפקיד ציבורי בלי תיק",w:"היא הצטרפה כשהמפלגה הייתה מתחת לחסימה. זה לא נשכח.",news:1}]},
  {id:'yashar',name:'ישר!',short:'ישר!',color:'#0E9AA7',base:23.9,sd:2,pos:3,x:4,y:2,bluff:.2,rel:.9,
   ports:[['תיק הביטחון','ביטחון'],['תיק החוץ','חוץ']],
   alts:[['תיק החינוך','חינוך'],['תיק הכלכלה','כלכלה']],
   asks:[{t:'רוטציה בראשות הממשלה, כשהם ראשונים',short:'רוטציה',b:'ורוטציה שבה את/ה ראשון/ה',rot:1,w:"קיבלנו את מספר המנדטים הגדול בגוש. הציבור לא יבין למה לא אנחנו מובילים."},
-                {t:'חוק גיוס שוויוני',short:'חוק הגיוס',b:'ונוסח עמום בחוק הגיוס',issue:{draft:'draft'},w:"שוויון בנטל הוא הנושא שסביבו נבחרנו. בלי חקיקה, אין הסכם."}]},
+                {t:'חוק גיוס שוויוני',short:'חוק הגיוס',b:'ונוסח עמום בחוק הגיוס',issue:{draft:'draft'},w:"שוויון בנטל הוא הנושא שסביבו נבחרנו. בלי חקיקה, אין הסכם."},
+        {t:"תפקידי ביטחון לקצינים הבכירים לשעבר שברשימה",short:"התפקידים הביטחוניים",b:"ותפקיד אחד בלבד",w:"הבאנו לכאן ניסיון מבצעי. הוא לא נועד לשבת בוועדות.",news:1}]},
  {id:'together',name:'ביחד',short:'ביחד',color:'#7A4FD0',base:13,sd:1.6,pos:4,x:5,y:3,bluff:.35,rel:.8,
   ports:[['תיק החוץ','חוץ'],['תיק החינוך','חינוך']],
   alts:[['תיק הכלכלה','כלכלה'],['תיק התיירות','תיירות']],
   asks:[{t:'חוק גיוס שוויוני',short:'חוק הגיוס',b:'ונוסח עמום בחוק הגיוס',issue:{draft:'draft'},w:"זה היה הסעיף הראשון בקמפיין שלנו. אי אפשר לוותר עליו בחדר סגור."},
-                {t:'תקציב חינוך רב-שנתי',short:'תקציב החינוך',b:'ותוספת תקציב חלקית',trust:-2,w:"בלי תקציב רב-שנתי, כל הצהרה על חינוך היא מילים."}]},
+                {t:'תקציב חינוך רב-שנתי',short:'תקציב החינוך',b:'ותוספת תקציב חלקית',trust:-2,w:"בלי תקציב רב-שנתי, כל הצהרה על חינוך היא מילים."},
+        {t:"חלוקה שווה של תפקידים בין שני האגפים שהתמזגו",short:"החלוקה בין האגפים",b:"וחלוקה לא סימטרית",w:"איחדנו שתי מפלגות כדי להגיע לכאן. שני הצדדים סופרים כיסאות.",news:1}]},
  {id:'nep',name:'מפלגה כלכלית חדשה',short:'הכלכלית',color:'#00838F',base:1.9,sd:.9,pos:4.2,x:4.5,y:1.5,bluff:.35,rel:.8,
   ports:[['משרד ליוקר המחיה','יוקר המחיה'],['תיק הכלכלה','כלכלה']],
   alts:[['תפקיד סגן שר באוצר','סגן שר באוצר'],['תיק התיירות','תיירות']],
   asks:[{t:'תוכנית לשבירת ריכוזיות',short:'התוכנית',b:'וועדה לבחינת הריכוזיות',w:"בלי כלים בידיים, משרד ליוקר המחיה הוא שלט על דלת."},
-                {t:'הפחתת מסים על מוצרי יסוד',short:'הפחתת המסים',b:'והפחתה חלקית',trust:-2,w:"הבטחנו הוזלה מיידית. בלי זה אנחנו לא נכנסים."}]},
+                {t:'הפחתת מסים על מוצרי יסוד',short:'הפחתת המסים',b:'והפחתה חלקית',trust:-2,w:"הבטחנו הוזלה מיידית. בלי זה אנחנו לא נכנסים."},
+        {t:"פרסום דוח מחירים חודשי מטעם הממשלה",short:"דוח המחירים",b:"ודוח חצי-שנתי",w:"שקיפות היא חצי מהעבודה. בלי נתונים אין ויכוח.",news:1}]},
  {id:'indy',name:'ח״כ עצמאי',short:'הח״כ העצמאי',color:'#8A94A6',base:0,sd:0,pos:5.5,x:5.5,y:5,bluff:0,rel:.6},
  {id:'yb',name:'ישראל ביתנו',short:'ישראל ביתנו',color:'#6F9A2E',base:8.4,sd:1.2,pos:5,x:6,y:0,bluff:.45,rel:.8,
   ports:[['תיק האוצר','אוצר'],['תיק הביטחון','ביטחון']],
   alts:[['תיק האנרגיה','אנרגיה'],['תיק התחבורה','תחבורה']],
   asks:[{t:'חוק גיוס לכולם',short:'חוק הגיוס',b:'ונוסח עמום בחוק הגיוס',issue:{draft:'draft'},w:"אנחנו לא נכנסים לממשלה שמנציחה את הפטור. זו עמדה שאנחנו חוזרים עליה שנים."},
-                {t:'תחבורה ציבורית בשבת ברשויות שיבחרו בכך',short:'התחבורה בשבת',b:'ופיילוט מצומצם בכמה רשויות',w:"המדינה לא יכולה לעצור ביום שבת. זה מה שהבוחרים שלנו ביקשו."}]},
+                {t:'תחבורה ציבורית בשבת ברשויות שיבחרו בכך',short:'התחבורה בשבת',b:'ופיילוט מצומצם בכמה רשויות',w:"המדינה לא יכולה לעצור ביום שבת. זה מה שהבוחרים שלנו ביקשו."},
+        {t:"התחייבות שלא לשנות את חוק יסוד הכנסת בלי הסכמתם",short:"ההתחייבות לחקיקה",b:"והתייעצות לפני חקיקה",w:"ראינו איך חוקי יסוד משתנים בלילה. לא עוד.",news:1}]},
  {id:'zh',name:'הבית הציוני – המילואימניקים',short:'הבית הציוני',color:'#7E9C3A',base:3.4,sd:1,pos:6.2,x:6.5,y:4,bluff:.35,rel:.8,
   ports:[['תיק המילואים והחוסן','המילואים'],['ראשות ועדת חוץ וביטחון','ועדת חוץ וביטחון']],
   alts:[['תיק הרווחה','רווחה'],['תפקיד סגן שר בביטחון','סגן שר בביטחון']],
   asks:[{t:'חוק גיוס שוויוני',short:'חוק הגיוס',b:'ונוסח עמום בחוק הגיוס',issue:{draft:'draft'},w:"המילואימניקים נשאו את הנטל. הם רוצים לראות חקיקה, לא הבטחות."},
-                {t:'חבילת הטבות למשרתי מילואים',short:'חבילת ההטבות',b:'וחבילה מצומצמת',trust:-2,w:"אנשים איבדו עסקים ומשרות. חבילת הטבות היא המינימום."}]},
+                {t:'חבילת הטבות למשרתי מילואים',short:'חבילת ההטבות',b:'וחבילה מצומצמת',trust:-2,w:"אנשים איבדו עסקים ומשרות. חבילת הטבות היא המינימום."},
+        {t:"תפקיד לשותף שהצטרף מהמרכז כדי לעבור את החסימה",short:"התפקיד לשותף",b:"ותפקיד בוועדה",w:"האיחוד הזה הציל את שתי הרשימות. הוא צריך להשתלם לשתיהן.",news:1}]},
  {id:'unity',name:'האחדות',short:'האחדות',color:'#5C6BC0',base:1.5,sd:.9,pos:6.8,x:7,y:4,bluff:.4,rel:.75,
   ports:[['תיק המשפטים','משפטים'],['תיק החוץ','חוץ']],
   alts:[['תיק התיירות','תיירות'],['תיק המדע','מדע']],
   asks:[{t:'מינויים מקצועיים בשירות הציבורי',short:'סוגיית המינויים',b:'והצהרה כללית על מינויים מקצועיים',w:"יצאנו מהבית הפוליטי שלנו בדיוק בגלל הנושא הזה. בלי זה אין סיבה שנהיה כאן."},
-                {t:'תפקיד בכיר נוסף לנציג מטעמם',short:'התפקיד הנוסף',b:'ותפקיד זוטר יותר',w:"אנחנו שני אנשים עם ותק. שני תפקידים זה לא מוגזם."}]},
+                {t:'תפקיד בכיר נוסף לנציג מטעמם',short:'התפקיד הנוסף',b:'ותפקיד זוטר יותר',w:"אנחנו שני אנשים עם ותק. שני תפקידים זה לא מוגזם."},
+        {t:"תפקיד בכיר לכל אחד משני המייסדים שפרשו מהליכוד",short:"שני התפקידים",b:"ותפקיד אחד בכיר, אחד זוטר",w:"עזבנו בית פוליטי שלם. חזרה בידיים ריקות היא לא אופציה.",news:1}]},
  {id:'likud',name:'הליכוד',short:'הליכוד',color:'#2B5DB8',base:22.7,sd:2,pos:6,x:7.5,y:5,bluff:.2,rel:.9,
   ports:[['תיק האוצר','אוצר'],['תיק החוץ','חוץ']],
   alts:[['תיק התחבורה','תחבורה'],['תיק הכלכלה','כלכלה']],
   asks:[{t:'רוטציה בראשות הממשלה, כשהם ראשונים',short:'רוטציה',b:'ורוטציה שבה את/ה ראשון/ה',rot:1,w:"אנחנו המפלגה הגדולה במחנה. ראשות הממשלה מתחילה אצלנו."},
-                {t:'הסכמה מראש על מינויים בכירים',short:'ההסכמה על המינויים',b:'והתייעצות על מינויים, בלי זכות וטו',w:"ראינו מה קורה כשלא מסכימים על זה מראש. הפעם זה ייסגר בכתב."}]},
+                {t:'הסכמה מראש על מינויים בכירים',short:'ההסכמה על המינויים',b:'והתייעצות על מינויים, בלי זכות וטו',w:"ראינו מה קורה כשלא מסכימים על זה מראש. הפעם זה ייסגר בכתב."},
+        {t:"שמירה על המקומות ששוריינו ברשימה גם בחלוקת התיקים",short:"השריונים",b:"והתחשבות, בלי התחייבות",w:"הבטחנו לאנשים האלה מקום. אנחנו לא נחזור בנו מזה עכשיו.",news:1}]},
  {id:'winter',name:'עמך ישראל',short:'עמך ישראל',color:'#9A6444',base:5.1,sd:1.2,pos:7,x:8.5,y:6,bluff:.4,rel:.7,
   ports:[['מושב בקבינט המדיני-ביטחוני','מושב בקבינט'],['תיק המורשת','מורשת']],
   alts:[['תיק ההתיישבות','התיישבות'],['תפקיד סגן שר בביטחון','סגן שר בביטחון']],
   asks:[{t:'חוק גיוס לכולם',short:'חוק הגיוס',b:'ונוסח עמום בחוק הגיוס',issue:{draft:'draft'},w:"הצבא צריך חיילים, ולא ועדות. לשם כך נכנסנו לפוליטיקה."},
-                {t:'מדיניות ביטחון נוקשה',short:'מדיניות הביטחון',b:'ונוסח עמום במדיניות הביטחון',issue:{security:'hawk'},w:"הניסיון בשטח אומר שרק מדיניות ברורה עובדת. בלי זה אנחנו מיותרים."}]},
+                {t:'מדיניות ביטחון נוקשה',short:'מדיניות הביטחון',b:'ונוסח עמום במדיניות הביטחון',issue:{security:'hawk'},w:"הניסיון בשטח אומר שרק מדיניות ברורה עובדת. בלי זה אנחנו מיותרים."},
+        {t:"תפקיד ביטחוני למייסד המפלגה, תת-אלוף במילואים",short:"התפקיד הביטחוני",b:"ומעמד משקיף בקבינט",w:"הקמנו מפלגה חודשיים לפני הבחירות ועברנו את החסימה. זה אומר משהו.",news:1}]},
  {id:'shas',name:'ש״ס',short:'ש״ס',color:'#C08A1E',base:8,sd:1,pos:8,x:7,y:9.5,bluff:.35,rel:.85,
   ports:[['תיק הפנים','פנים'],['תיק הדתות','דתות']],
   alts:[['תיק הרווחה','רווחה'],['תיק הפריפריה','פריפריה']],
   asks:[{t:'חוק שמעגן את מעמד לומדי התורה',short:'חוק הגיוס',b:'ונוסח עמום בחוק לומדי התורה',issue:{draft:'exempt'},w:"עולם התורה הוא הנשמה של העם. את זה אנחנו לא נשאיר בלי עיגון בחוק."},
-                {t:'תקציב רב-שנתי לחינוך העצמאי',short:'תקציב החינוך העצמאי',b:'ומחצית מהתוספת התקציבית',trust:-3,w:"החינוך שלנו מתוקצב בחסר שנים. זה תיקון עוול, לא מתנה."}]},
+                {t:'תקציב רב-שנתי לחינוך העצמאי',short:'תקציב החינוך העצמאי',b:'ומחצית מהתוספת התקציבית',trust:-3,w:"החינוך שלנו מתוקצב בחסר שנים. זה תיקון עוול, לא מתנה."},
+        {t:"שיבוץ נציג הקהילה הבוכרית שנוסף לרשימה בתפקיד ציבורי",short:"השיבוץ של הנציג החדש",b:"ותפקיד ייעוצי בלבד",w:"פתחנו את הרשימה לקהילות חדשות. עכשיו הן רוצות לראות תוצאה.",news:1}]},
  {id:'utj',name:'יהדות התורה',short:'יהדות התורה',color:'#6B7280',base:7.6,sd:.8,pos:9,x:6.5,y:10,bluff:.3,rel:.85,
   ports:[['ראשות ועדת הכספים','ועדת הכספים'],['תיק השיכון','שיכון']],
   alts:[['תפקיד סגן שר בבריאות','סגן שר בבריאות'],['תיק הפריפריה','פריפריה']],
   asks:[{t:'חוק שמעגן פטור מגיוס',short:'חוק הגיוס',b:'ונוסח עמום בחוק הגיוס',issue:{draft:'exempt'},w:"בלי חוק, כל סיכום כאן יתפוצץ בבית המשפט בתוך שנה."},
-                {t:'שמירה על הסטטוס קוו בענייני דת ומדינה',short:'הסטטוס קוו',b:'והצהרה כללית על הסטטוס קוו',w:"הסטטוס קוו נשמר מאז קום המדינה. אנחנו לא נהיה הממשלה שתשנה אותו."}]},
+                {t:'שמירה על הסטטוס קוו בענייני דת ומדינה',short:'הסטטוס קוו',b:'והצהרה כללית על הסטטוס קוו',w:"הסטטוס קוו נשמר מאז קום המדינה. אנחנו לא נהיה הממשלה שתשנה אותו."},
+        {t:"תפקיד בכיר לנציג החדש בראשות הסיעה",short:"התפקיד לנציג החדש",b:"ותפקיד זוטר יותר",w:"הרשימה שלנו התחלפה כמעט כולה. מי שנכנס צריך לחזור לבוחרים עם משהו.",news:1}]},
  {id:'noam',name:'נעם',short:'נעם',color:'#8E24AA',base:.8,sd:.7,pos:9.2,x:9.5,y:10,bluff:.4,rel:.75,
   ports:[['תפקיד סגן שר בחינוך','סגן שר בחינוך'],['ראשות ועדה לענייני משפחה','ועדת המשפחה']],
   alts:[['תפקיד סגן שר בדתות','סגן שר בדתות'],['תיק המורשת','מורשת']],
   asks:[{t:'חוק שמעגן פטור מגיוס',short:'חוק הגיוס',b:'ונוסח עמום בחוק',issue:{draft:'exempt'},w:"הציבור שלנו שלח אותנו לשמור על הנושא הזה, ואין לנו רשות לוותר עליו."},
-                {t:'תקציב לתוכניות חינוך מסורתי',short:'התקציב לחינוך המסורתי',b:'ותקציב מצומצם',trust:-2,w:"אנחנו מבקשים תקציב, לא מהפכה."}]},
- {id:'zehut',name:'זהות',short:'זהות',color:'#C2560F',base:2.2,sd:.9,pos:8.2,x:8,y:6,bluff:.45,rel:.65,
-  ports:[['תיק הכלכלה','כלכלה'],['תיק התיירות','תיירות']],
-  alts:[['תיק המדע','מדע'],['תפקיד סגן שר באוצר','סגן שר באוצר']],
-  asks:[{t:'רפורמה כלכלית ליברלית',short:'הרפורמה',b:'ורפורמה מצומצמת',w:"בלי רפורמה כלכלית אמיתית, כל השאר הוא ניהול של אותו כשל."},
-                {t:'מדיניות ביטחון נוקשה',short:'מדיניות הביטחון',b:'ונוסח עמום במדיניות',issue:{security:'hawk'},w:"הבוחרים שלנו רוצים לראות עמדה ברורה, לא נוסחאות."}]},
+                {t:'תקציב לתוכניות חינוך מסורתי',short:'התקציב לחינוך המסורתי',b:'ותקציב מצומצם',trust:-2,w:"אנחנו מבקשים תקציב, לא מהפכה."},
+        {t:"זכות התייעצות על חקיקה בענייני משפחה",short:"זכות ההתייעצות",b:"והתייעצות בלי מנגנון",w:"אנחנו מפלגה קטנה. מנגנון הוא הדרך היחידה שלנו להשפיע.",news:1}]},
  {id:'rzp',name:'הציונות הדתית',short:'הציונות הדתית',color:'#B39B1C',base:3.8,sd:1.1,pos:10,x:9.5,y:9,bluff:.4,rel:.8,
   ports:[['שר נוסף במשרד הביטחון','שר במשרד הביטחון'],['תיק החקלאות','חקלאות']],
   alts:[['תיק המדע','מדע'],['תיק ההתיישבות','התיישבות']],
   asks:[{t:'מדיניות ביטחון נוקשה',short:'מדיניות הביטחון',b:'ונוסח עמום במדיניות הביטחון',issue:{security:'hawk'},w:"ההתיישבות היא לב התנועה שלנו. בלי מדיניות ברורה אין לנו מה לחפש בממשלה."},
-                {t:'תקציב רב-שנתי להתיישבות',short:'תקציב ההתיישבות',b:'ותוספת תקציב חלקית',trust:-2,w:"תקציב חד-פעמי לא בונה כלום. אנחנו צריכים התחייבות לשנים."}]},
+                {t:'תקציב רב-שנתי להתיישבות',short:'תקציב ההתיישבות',b:'ותוספת תקציב חלקית',trust:-2,w:"תקציב חד-פעמי לא בונה כלום. אנחנו צריכים התחייבות לשנים."},
+        {t:"הבטחה לכבד את ההסכם הטכני עם זהות גם אחרי הבחירות",short:"ההסכם עם זהות",b:"והצהרה כללית, בלי התחייבות",w:"רצנו יחד עם פייגלין. לא ניכנס לממשלה שתפרק את זה ביום הראשון.",news:1}]},
  {id:'otzma',name:'עוצמה יהודית',short:'עוצמה יהודית',color:'#E0892B',base:7.4,sd:1.1,pos:11,x:10,y:8,bluff:.45,rel:.75,
   ports:[['התיק לביטחון לאומי','ביטחון לאומי'],['תיק הפנים','פנים']],
   alts:[['תיק הנגב והגליל','הנגב והגליל'],['תיק המורשת','מורשת']],
   asks:[{t:'מדיניות ביטחון נוקשה',short:'מדיניות הביטחון',b:'ונוסח עמום במדיניות הביטחון',issue:{security:'hawk'},w:"הבוחרים שלנו דרשו קו ברור בביטחון. זו כל הסיבה שאנחנו כאן."},
-                {t:'הרחבת סמכויות המשמר הלאומי',short:'המשמר הלאומי',b:'ודיון על הסמכויות, בלי החלטה',w:"התחלנו את המהלך הזה, ואנחנו מתכוונים להשלים אותו."}]}
+                {t:'הרחבת סמכויות המשמר הלאומי',short:'המשמר הלאומי',b:'ודיון על הסמכויות, בלי החלטה',w:"התחלנו את המהלך הזה, ואנחנו מתכוונים להשלים אותו."},
+        {t:"שיריון תיק בכיר לטלי גוטליב, שעברה מהליכוד ושובצה במקום השני ברשימה",short:"התיק לגוטליב",b:"ותפקיד ועדה במקום תיק",w:"המעבר שלה מהליכוד היה הסיפור של השבוע. עכשיו הוא צריך להיראות גם בממשלה.",news:1}]}
 ];
 const ACC=['מקבל/ת את הכל','סגור. שני התנאים מאושרים','מסכים/ה לתנאים שלהם','נותן/ת להם בדיוק את מה שביקשו'];
 const REF=['לא מתחייב/ת לכלום','אין מתנות. שיחליטו','זה לא על השולחן','מסרב/ת לדרישות'];
@@ -691,7 +821,7 @@ function buildCard(p){
     opts.push({t:`${ask.short}, ו${alt[0]} במקום ${main[0]}`,base:.48+j(),ports:[alt[1]],issue:ask.issue,trust:ask.trust});
   }
   opts.push({t:pick(REF),refuse:1});
-  return {demand:`${main[0]}, ו${ask.t}.`,why:ask.w,opts};
+  return {demand:`${main[0]}, ו${ask.t}.`,why:ask.w,news:!!ask.news,opts};
 }
 const cardOf=id=>S.cards[id];
 const active=()=>P.filter(p=>S.seats[p.id]>0);
@@ -776,21 +906,29 @@ function pickEvent(){
   const dbl=S.doubles.find(d=>!d.done&&inCoal(d.first));
   if(dbl) E.push({w:6,run(){dbl.done=true;const f=byId[dbl.first],q=S.ps[f.id],msgs=[];S.trust-=6;q.sat-=30;
     if(q.sat<40) leave(f.id,msgs,'גילתה שהבטחת את תיק '+dbl.x+' גם ל'+byId[dbl.second].short+'.'); else msgs.push([f.short+' זועמת, אבל נשארת. בינתיים.','warn']);
-    return {title:'הדלפה',text:'בערוצי החדשות מדווחים שתיק '+dbl.x+' הובטח לשתי מפלגות: '+f.short+' ו'+byId[dbl.second].short+'.',msgs}}});
+    return {title:'"הבטיח פעמיים, וחשב שלא יתפסו"',text:'צילום מסך של שתי טיוטות הסכם עלה לרשת: תיק '+dbl.x+' הובטח גם ל'+f.short+' וגם ל'+byId[dbl.second].short+'. הפאנלים בסטודיו כבר מדברים על "שיטת העבודה".',msgs}}});
   const weak=signed.filter(p=>S.ps[p.id].sat<75);
   if(weak.length&&!S.evDone.includes('steal')) E.push({w:3,key:'steal',run(){const p=weak[Math.floor(rand()*weak.length)];
-    return {title:'הצעה מהצד השני',text:'המחנה היריב מציע ל'+p.short+' הצעה טובה יותר. הם מחכים לשמוע ממך עד הערב.',choice:[
+    return {title:'"פגישה חשאית במלון בירושלים"',text:'צלם תפס את אנשי '+p.short+' יוצאים מפגישה עם המחנה היריב בשתיים בלילה. בלשכה מכחישים. הם מחכים לשמוע ממך עד הערב.',choice:[
       {t:'משווים את ההצעה',tag:'אמון הציבור יורד',go(){S.trust-=6;S.ps[p.id].sat+=15;return [[p.short+' נשארת.','good']]}},
       {t:'לא נכנעים לסחטנות',tag:'סיכוי שתעזוב',go(){const m=[];if(rand()<.5) leave(p.id,m,'קיבלה את ההצעה של היריב.'); else {S.ps[p.id].sat-=10;m.push([p.short+' נשארת, ממורמרת.','warn'])}return m}}]}}});
   if(open.length&&!S.evDone.includes('poll')) E.push({w:2,key:'poll',run(){const p=open[Math.floor(rand()*open.length)];S.ps[p.id].sat-=12;
-    return {title:'סקר חדש',text:'סקר מראה ש'+p.short+' תתחזק אם ילכו לבחירות חוזרות. הצוות שלה מקשיח עמדות.',msgs:[[p.short+' פחות מתפשרת.','warn']]}}});
-  if(!S.evDone.includes('sec')) E.push({w:2,key:'sec',run(){S.days-=3;S.trust+=4;return {title:'אירוע ביטחוני',text:'הקבינט מתכנס בלילה. המשא ומתן מוקפא לשלושה ימים.',msgs:[['−3 ימים. הציבור מתלכד: אמון +4.','warn']]}}});
+    return {title:'סקר: "'+p.short+' חוגגת"',text:'סקר מיוחד מראה ש'+p.short+' תתחזק בבחירות חוזרות. מאז הפרסום הצוות שלהם עונה לטלפון פעם בשעתיים.',msgs:[[p.short+' פחות מתפשרת.','warn']]}}});
+  if(!S.evDone.includes('sec')) E.push({w:2,key:'sec',run(){S.days-=3;S.trust+=4;return {title:'הקבינט מתכנס בלילה',text:'אירוע ביטחוני בצפון עוצר הכל. המשא ומתן מוקפא לשלושה ימים, והמצלמות עברו לגבול.',msgs:[['−3 ימים. הציבור מתלכד: אמון +4.','warn']]}}});
   const rv=rivalId();
-  if(rv&&S.ps[rv]&&S.ps[rv].st==='open'&&!S.evDone.includes('pres')) E.push({w:2,key:'pres',run(){S.ps[rv].sat+=20;return {title:'הנשיא קורא לאחדות',text:'בית הנשיא קורא להקים ממשלה רחבה ככל האפשר. '+byId[rv].short+' מאותתת שהיא מוכנה לדבר.',msgs:[[byId[rv].short+' פתוחה יותר לאחדות.','good']]}}});
+  if(rv&&S.ps[rv]&&S.ps[rv].st==='open'&&!S.evDone.includes('pres')) E.push({w:2,key:'pres',run(){S.ps[rv].sat+=20;return {title:'"הנשיא איבד סבלנות"',text:'בית הנשיא פרסם קריאה חריגה להקים ממשלה רחבה. מקורבים מספרים על שיחת טלפון לא נעימה. '+byId[rv].short+' פתאום מוכנה לדבר.',msgs:[[byId[rv].short+' פתוחה יותר לאחדות.','good']]}}});
   if(rv&&S.ps[rv]&&S.seats[rv]>6&&!S.seats.indy&&!S.evDone.includes('indy')) E.push({w:2,key:'indy',run(){S.seats[rv]--;S.seats.indy=1;S.ps.indy={sat:70,st:'signed',wasSigned:true,firm:[]};
-    return {title:'עריק',text:'ח״כ מ'+byId[rv].short+' מודיע שיפרוש לסיעה של יחיד ויתמוך בממשלה שלך.',msgs:[['+1 מנדט לקואליציה.','good']]}}});
-  if(!S.evDone.includes('demo')) E.push({w:1,key:'demo',run(){S.trust-=5;return {title:'מחאה',text:'אלפים מפגינים מול הכנסת נגד ההסכמים המתגבשים.',msgs:[['אמון הציבור −5.','bad']]}}});
-  if(open.length&&!S.evDone.includes('night')) E.push({w:1,key:'night',run(){open.forEach(p=>S.ps[p.id].sat+=6);return {title:'פגישת לילה',text:'שיחה ארוכה במלון בירושלים. כולם יוצאים עם חיוך.',msgs:[['כל המפלגות הפתוחות מתחממות.','good']]}}});
+    return {title:'"הבוקר הוא עוד היה שם"',text:'ח״כ מ'+byId[rv].short+' פרש לסיעת יחיד והודיע שיתמוך בממשלה שלך. בסיעה שלו מדברים על "תפקיד שהובטח". אצלך מכחישים.',msgs:[['+1 מנדט לקואליציה.','good']]}}});
+  if(!S.evDone.includes('demo')) E.push({w:1,key:'demo',run(){S.trust-=5;return {title:'"הרחוב רותח"',text:'אלפים מול הכנסת נגד ההסכמים המתגבשים. שידור חי בכל הערוצים, וסקר מהיר שאומר שרוב הציבור לא אוהב את מה שהוא רואה.',msgs:[['אמון הציבור −5.','bad']]}}});
+  if(open.length&&!S.evDone.includes('night')) E.push({w:1,key:'night',run(){open.forEach(p=>S.ps[p.id].sat+=6);return {title:'"הצטלמו יחד. מה קרה שם?"',text:'תמונה משיחה ארוכה בלילה עולה לרשת, וכולם בה מחייכים. הפרשנים לא מצליחים להסביר, והטלפונים אצלך מתחילים לצלצל.',msgs:[['כל המפלגות הפתוחות מתחממות.','good']]}}});
+  if(!S.evDone.includes('tv')) E.push({w:2,key:'tv',run(){S.trust-=4;
+    return {title:'"אמרת \'לא\' ואז \'כן\' באותו משפט"',text:'קטע של 20 שניות מהריאיון שלך רץ ברשת עם מוזיקה. אפילו מי שמסכים איתך משתף אותו.',msgs:[['אמון הציבור −4.','bad']]}}});
+  if(signed.length&&!S.evDone.includes('selfie')) E.push({w:2,key:'selfie',run(){const p=signed[Math.floor(rand()*signed.length)];S.ps[p.id].sat+=10;S.trust-=3;
+    return {title:'"הסלפי ששבר את הרשת"',text:'עוזר פרסם בטעות תמונה שלך עם אנשי '+p.short+' וקנקן לימונדה. אצלם מרוצים. אצל הבוחרים שלך פחות.',msgs:[[p.short+' מרוצה מהחיבוק הציבורי.','good'],['אמון הציבור −3.','warn']]}}});
+  if(open.length&&!S.evDone.includes('leakdoc')) E.push({w:2,key:'leakdoc',run(){const p=open[Math.floor(rand()*open.length)];S.ps[p.id].sat-=8;
+    return {title:'"הטיוטה שדלפה לאולפן"',text:'הפרוטוקול מהפגישה עם '+p.short+' הגיע לשולחן של פרשן בכיר, כולל המשפט שלא היה אמור לצאת מהחדר.',msgs:[[p.short+' פחות סומכת עליך.','warn']]}}});
+  if(!S.evDone.includes('rumor')) E.push({w:1,key:'rumor',run(){S.days-=2;
+    return {title:'"מי הדליף את זה?"',text:'יומיים שלמים נשרפו על ציד המדליף בלשכה. לא נמצא. הפגישות נדחו.',msgs:[['−2 ימים.','warn']]}}});
   let tot=E.reduce((a,e)=>a+e.w,0),x=rand()*tot;
   for(const e of E){x-=e.w;if(x<=0){if(e.key)S.evDone.push(e.key);return e.run()}}
   return null;
@@ -934,7 +1072,7 @@ function renderSheet(){
   let body='';
   if(sh.kind==='meet'){const p=byId[sh.id],q=S.ps[sh.id],[m,c]=moodOf(q.sat);
     body=`<div class="row" style="justify-content:space-between;align-items:center"><div><div class="eyebrow">פגישה · ${S.seats[p.id]} מנדטים</div><h2 class="display">${p.name}</h2></div>${chip(['מצב רוח: '+m,c])}</div>
-     <div class="demand"><span class="eyebrow">צוות המשא ומתן דורש</span><div class="q">${esc(cardOf(p.id).demand)}</div>${cardOf(p.id).why?`<p class="muted" style="font-size:14.5px;border-inline-start:3px solid var(--line);padding-inline-start:10px">${esc(cardOf(p.id).why)}</p>`:''}${pivotal(p.id)?'<span class="chip bad" style="justify-self:start">הם יודעים שבלעדיהם אין לך 61</span>':''}</div>
+     <div class="demand"><span class="eyebrow">צוות המשא ומתן דורש ${cardOf(p.id).news?'<span class="chip warn">מהחדשות</span>':''}</span><div class="q">${esc(cardOf(p.id).demand)}</div>${cardOf(p.id).why?`<p class="muted" style="font-size:14.5px;border-inline-start:3px solid var(--line);padding-inline-start:10px">${esc(cardOf(p.id).why)}</p>`:''}${pivotal(p.id)?'<span class="chip bad" style="justify-self:start">הם יודעים שבלעדיהם אין לך 61</span>':''}</div>
      <div class="opts">${cardOf(p.id).opts.map((o,i)=>`<button class="opt" data-act="pick" data-i="${i}"><span class="t">${esc(o.t)}</span><span class="tags">${previewTags(o,p.id).map(chip).join('')}</span></button>`).join('')}</div>
      <button class="btn ghost" data-act="close">עוד לא. חזרה ללוח</button>`;}
   else if(sh.kind==='result'){body=`<div class="result"><div class="eyebrow">${byId[sh.id].name} · עברו ${sh.cost} ימים</div><div class="head display" style="color:var(--${sh.tone})">${sh.head}</div>
