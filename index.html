@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>שישים ואחת</title>
+<meta name="description" content="יום אחרי הבחירות, והמנדט אצלך: 28 ימים להרכיב קואליציה של 61, בלי לתת לכולם הכל. משחק של כמה דקות.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="he_IL">
+<meta property="og:title" content="שישים ואחת">
+<meta property="og:description" content="יום אחרי הבחירות, והמנדט אצלך: 28 ימים להרכיב קואליציה של 61, בלי לתת לכולם הכל. משחק של כמה דקות.">
+<meta property="og:image" content="https://shirancohen86.github.io/sixty-one/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://shirancohen86.github.io/sixty-one/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0038B8">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20220%20160%22%3E%3Crect%20width%3D%22220%22%20height%3D%22160%22%20fill%3D%22%23fff%22/%3E%3Crect%20y%3D%2215%22%20width%3D%22220%22%20height%3D%2225%22%20fill%3D%22%230038B8%22/%3E%3Crect%20y%3D%22120%22%20width%3D%22220%22%20height%3D%2225%22%20fill%3D%22%230038B8%22/%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%230038B8%22%20stroke-width%3D%227%22%3E%3Cpolygon%20points%3D%22110%2C50%20136%2C95%2084%2C95%22/%3E%3Cpolygon%20points%3D%22110%2C110%2084%2C65%20136%2C65%22/%3E%3C/g%3E%3C/svg%3E">
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@700;900&family=Assistant:wght@400;600;700;800&display=swap">
+<style>
+:root{
+  --bg:#FFFFFF;--surface:#F1F5FD;--surface2:#E3EBFA;--ink:#0A1F5C;--muted:#4D5E87;--line:#C8D5F0;
+  --flag:#0038B8;--accent:#0038B8;--accent-soft:#DCE6FB;--on-accent:#FFFFFF;
+  --good:#17754A;--good-soft:#DDF1E6;--warn:#8F5400;--warn-soft:#F8EBD3;--bad:#B42318;--bad-soft:#F9E0DD;
+  --shadow:0 12px 32px rgba(10,31,92,.16);--scrim:rgba(10,31,92,.42);
+  color-scheme:light;
+}
+html,body{background:var(--bg);height:100%}
+#app::before,#app::after{content:"";display:block;height:30px;background:linear-gradient(to bottom,#fff 0 6px,var(--flag) 6px 16px,#fff 16px)}
+#app::after{transform:scaleY(-1)}
+.flag{display:block;width:112px;height:auto;filter:drop-shadow(0 4px 10px rgba(10,31,92,.18));border-radius:3px}
+.flag.sm{width:44px;filter:none;box-shadow:0 0 0 1px var(--line)}
+body{color:var(--ink);font-family:"Assistant",system-ui,"Segoe UI",Arial,sans-serif;font-size:16px;line-height:1.5;-webkit-tap-highlight-color:transparent}
+*{box-sizing:border-box}
+.wrap{max-width:560px;margin:0 auto;padding-inline:16px;padding-block:18px 48px;display:flex;flex-direction:column;gap:18px}
+.display{font-family:"Frank Ruhl Libre","David Libre",Georgia,serif;font-weight:900;letter-spacing:-.01em}
+.num{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--muted)}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+/* intro */
+.hero{display:grid;gap:6px;justify-items:center;text-align:center;padding-top:8px}
+.hero .big{font-size:clamp(96px,30vw,150px);line-height:.85;color:var(--accent)}
+.hero h1{font-size:28px}
+.hero p{max-width:34ch;color:var(--muted)}
+.hemi{width:100%;max-width:100%;display:block}
+.hemi-box{position:relative}
+.hemi-label{position:absolute;inset-inline:0;bottom:2%;text-align:center;line-height:1}
+.hemi-label .n{font-size:clamp(34px,11vw,52px)}
+.hemi-label .of{font-size:14px;color:var(--muted);font-weight:700}
+.cands{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cand{background:#fff;border:2px solid var(--line);border-radius:14px;padding:14px;text-align:start;display:grid;gap:4px}
+.cand[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 3px var(--accent-soft)}
+.cand .who{font-weight:800;font-size:17px;line-height:1.2}
+.cand .sub{font-size:13px;color:var(--muted)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;vertical-align:middle;margin-inline-end:6px}
+.btn{border:0;border-radius:12px;padding:14px 18px;font-weight:800;font-size:17px;background:var(--accent);color:var(--on-accent);width:100%}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.btn.small{padding:10px 14px;font-size:15px;width:auto}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row > .btn{flex:1 1 160px}
+.rules{display:grid;gap:8px;background:var(--surface);border-radius:14px;padding:14px 16px;font-size:15px}
+.rules li{margin:0}
+.rules ul{margin:0;padding-inline-start:18px;display:grid;gap:4px}
+.fine{font-size:12.5px;color:var(--muted);line-height:1.55}
+.code-in{display:flex;gap:8px;align-items:center}
+.code-in input{flex:1;min-width:0;font:inherit;padding:10px 12px;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--ink);direction:ltr;text-align:center;letter-spacing:.1em;text-transform:uppercase}
+.linkbtn{background:none;border:0;color:var(--accent);font-weight:700;padding:4px 0;text-decoration:underline;text-underline-offset:3px}
+
+/* board */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--surface);border-radius:12px;padding:10px 12px;display:grid;gap:4px}
+.stat .v{font-size:26px;font-weight:800;line-height:1}
+.stat .l{font-size:12px;font-weight:700;color:var(--muted)}
+.bar{height:6px;border-radius:3px;background:var(--surface2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:3px;transition:width .4s}
+.bar.low i{background:var(--bad)}
+.commits{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:13px}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--surface2);color:var(--muted);white-space:nowrap}
+.chip.good{background:var(--good-soft);color:var(--good)}
+.chip.warn{background:var(--warn-soft);color:var(--warn)}
+.chip.bad{background:var(--bad-soft);color:var(--bad)}
+.chip.acc{background:var(--accent-soft);color:var(--accent)}
+.list{display:grid;gap:6px}
+.prow{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;background:var(--surface);border:0;border-radius:12px;padding:11px 12px;text-align:start;width:100%}
+.prow:disabled{cursor:default;opacity:.62}
+.prow .sw{width:14px;height:14px;border-radius:4px}
+.prow .nm{font-weight:800;line-height:1.2}
+.prow .meta{font-size:13px;color:var(--muted)}
+.prow .seats{font-size:22px;font-weight:800;min-width:2ch;text-align:center}
+.prow.open{box-shadow:inset 0 0 0 2px transparent}
+.prow.open:hover{box-shadow:inset 0 0 0 2px var(--accent)}
+.sect{font-size:13px;font-weight:800;color:var(--muted);letter-spacing:.04em;margin-top:4px}
+.banner{background:var(--accent-soft);color:var(--ink);border-radius:12px;padding:12px 14px;display:grid;gap:10px}
+
+/* sheet */
+.scrim{position:fixed;inset:0;background:var(--scrim);display:flex;align-items:flex-end;justify-content:center;z-index:10;animation:fade .18s ease-out}
+.sheet{background:var(--bg);border-top:8px solid var(--flag);width:100%;max-width:560px;max-height:92%;overflow:auto;border-radius:20px 20px 0 0;padding-inline:16px;padding-block:18px calc(22px + env(safe-area-inset-bottom,0px));display:grid;gap:14px;box-shadow:var(--shadow);animation:up .22s ease-out}
+.sheet h2{font-size:24px}
+.demand{background:var(--surface);border-radius:14px;padding:14px 16px;display:grid;gap:6px}
+.demand .q{font-size:19px;font-weight:700;line-height:1.35}
+.opts{display:grid;gap:8px}
+.opt{background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:12px 14px;text-align:start;display:grid;gap:8px;width:100%}
+.opt:hover{border-color:var(--accent)}
+.opt .t{font-weight:800;font-size:16.5px;line-height:1.3}
+.tags{display:flex;gap:5px;flex-wrap:wrap}
+.result{background:var(--surface);border-radius:14px;padding:16px;display:grid;gap:8px}
+.result .head{font-size:22px}
+.result ul{margin:0;padding-inline-start:18px;display:grid;gap:4px}
+.mood{font-size:13px;font-weight:700}
+
+/* swear / end */
+.votes{display:grid;gap:6px}
+.vrow{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;background:var(--surface);border-radius:10px;padding:9px 12px;animation:up .3s ease-out both}
+.endcard{background:linear-gradient(to bottom,#fff 0 10px,var(--flag) 10px 20px,var(--surface) 20px);border-radius:18px;padding:36px 18px 20px;display:grid;gap:10px;text-align:center;justify-items:center}
+.endcard .title{font-size:30px;line-height:1.1}
+.endcard .score{font-size:64px;line-height:1;color:var(--accent)}
+.break{width:100%;display:grid;gap:4px;font-size:14.5px;text-align:start}
+.break div{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid var(--line);padding-block:5px}
+.sharebox{width:100%;font:inherit;font-size:14px;padding:10px;border-radius:10px;border:2px solid var(--line);background:var(--surface2);color:var(--ink);resize:none}
+
+.seat{animation:pop .35s ease-out both}
+@keyframes pop{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
+@keyframes up{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.seat,.scrim,.sheet,.vrow{animation:none}.bar i{transition:none}}
+@media (max-width:380px){.stats .v{font-size:22px}.cands{grid-template-columns:1fr}}
+</style>
+
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+document.documentElement.lang='he';
+document.documentElement.dir='rtl';
+
+/* ---------- data ---------- */
+// Poll base = rough average of polls published 26–31 Aug 2026 (Channels 12, 13, 14, 16, Kan 11, Maariv, i24, Walla, Zman Yisrael).
+const ISSUES={
+  draft:{name:'גיוס',draft:'חוק גיוס לכולם',exempt:'עיגון פטור ללומדי תורה'},
+  security:{name:'מדיניות',hawk:'מדיניות ביטחון נוקשה',deal:'פתיחת שיחות מדיניות'}
+};
+const SENIOR=['אוצר','ביטחון','חוץ','משפטים'];
+const CANDS={
+  likud:{leader:'בנימין נתניהו',party:'הליכוד',rival:'yashar'},
+  yashar:{leader:'גדי איזנקוט',party:'ישר!',rival:'likud'}
+};
+const REDS=[['otzma','raam'],['otzma','joint'],['otzma','dems'],['rzp','raam'],['rzp','joint'],['rzp','dems']];
+
+const P=[
+ {id:'joint',name:'הרשימה המשותפת',short:'המשותפת',color:'#C2477F',base:7.3,sd:1.1,pos:0,never:true,aff:{likud:0,yashar:0}},
+ {id:'raam',name:'רע״מ',short:'רע״מ',color:'#2E9E6A',base:4.9,sd:.9,pos:1,aff:{likud:15,yashar:45},bluff:.4,rel:.75,cares:{},
+  card:{demand:'תוכנית חומש נגד הפשיעה בחברה הערבית, ותפקיד סגן שר.',opts:[
+   {t:'מקבל/ת: תוכנית חומש וסגן שר',sure:1,ports:['סגן שר']},
+   {t:'תוכנית חומש מצומצמת, בלי תפקיד',base:.5},
+   {t:'סגן שר, בלי תוכנית החומש',base:.35,ports:['סגן שר']},
+   {t:'לא עכשיו. נדבר אחרי ההשבעה',refuse:1}]}},
+ {id:'dems',name:'הדמוקרטים',short:'הדמוקרטים',color:'#D94E4E',base:9.9,sd:1.3,pos:2,aff:{likud:5,yashar:70},bluff:.3,rel:.85,cares:{security:'deal'},
+  card:{demand:'תיק המשפטים, ומחויבות לפתוח בשיחות מדיניות.',opts:[
+   {t:'מקבל/ת את שני התנאים',sure:1,ports:['משפטים'],issue:{security:'deal'}},
+   {t:'תיק המשפטים, ונוסח עמום על שיחות',base:.45,ports:['משפטים']},
+   {t:'מחויבות לשיחות, ותיק החינוך במקום המשפטים',base:.5,ports:['חינוך'],issue:{security:'deal'}},
+   {t:'בלי התחייבויות',refuse:1}]}},
+ {id:'yashar',name:'ישר!',short:'ישר!',color:'#0E9AA7',base:23.9,sd:2,pos:3,aff:{likud:10,yashar:100},bluff:.2,rel:.9,cares:{},
+  card:{demand:'ממשלת אחדות ברוטציה: איזנקוט ראשון, ותיק הביטחון לישר!.',opts:[
+   {t:'מקבל/ת: רוטציה, והם ראשונים',sure:1,ports:['ביטחון'],rot:'them'},
+   {t:'רוטציה שבה את/ה ראשון/ה, והביטחון להם',base:.35,ports:['ביטחון'],rot:'me'},
+   {t:'בלי רוטציה, אבל ביטחון וחוץ',base:.22,ports:['ביטחון','חוץ']},
+   {t:'אין רוטציה ואין מתנות',refuse:1}]}},
+ {id:'together',name:'ביחד',short:'ביחד',color:'#7A4FD0',base:13,sd:1.6,pos:4,aff:{likud:30,yashar:75},bluff:.35,rel:.8,cares:{draft:'draft'},
+  card:{demand:'תיק החוץ, וחוק גיוס שוויוני כתנאי לכניסה.',opts:[
+   {t:'מקבל/ת את שני התנאים',sure:1,ports:['חוץ'],issue:{draft:'draft'}},
+   {t:'תיק החוץ, ונוסח עמום בגיוס',base:.45,ports:['חוץ']},
+   {t:'חוק גיוס, ותיק הכלכלה במקום החוץ',base:.5,ports:['כלכלה'],issue:{draft:'draft'}},
+   {t:'לא מתחייב/ת לכלום',refuse:1}]}},
+ {id:'indy',name:'ח״כ עצמאי',short:'הח״כ העצמאי',color:'#8A94A6',base:0,sd:0,pos:5.5,aff:{likud:100,yashar:100},bluff:0,rel:.6,cares:{}},
+ {id:'yb',name:'ישראל ביתנו',short:'ישראל ביתנו',color:'#6F9A2E',base:8.4,sd:1.2,pos:5,aff:{likud:25,yashar:60},bluff:.45,rel:.8,cares:{draft:'draft'},
+  card:{demand:'תיק האוצר, וחוק גיוס לכולם.',opts:[
+   {t:'מקבל/ת את שני התנאים',sure:1,ports:['אוצר'],issue:{draft:'draft'}},
+   {t:'האוצר, ונוסח עמום בגיוס',base:.4,ports:['אוצר']},
+   {t:'חוק גיוס, ותיק האנרגיה במקום האוצר',base:.45,ports:['אנרגיה'],issue:{draft:'draft'}},
+   {t:'לא מתחייב/ת לכלום',refuse:1}]}},
+ {id:'likud',name:'הליכוד',short:'הליכוד',color:'#2B5DB8',base:22.7,sd:2,pos:6,aff:{likud:100,yashar:10},bluff:.2,rel:.9,cares:{},
+  card:{demand:'ממשלת אחדות ברוטציה: נתניהו ראשון, ותיק האוצר לליכוד.',opts:[
+   {t:'מקבל/ת: רוטציה, והם ראשונים',sure:1,ports:['אוצר'],rot:'them'},
+   {t:'רוטציה שבה את/ה ראשון/ה, והאוצר להם',base:.35,ports:['אוצר'],rot:'me'},
+   {t:'בלי רוטציה, אבל אוצר וחוץ',base:.22,ports:['אוצר','חוץ']},
+   {t:'אין רוטציה ואין מתנות',refuse:1}]}},
+ {id:'winter',name:'עמך ישראל',short:'עמך ישראל',color:'#9A6444',base:5.1,sd:1.2,pos:7,aff:{likud:60,yashar:25},bluff:.4,rel:.7,cares:{draft:'draft',security:'hawk'},
+  card:{demand:'חוק גיוס לכולם, ומושב בקבינט המדיני-ביטחוני.',opts:[
+   {t:'מקבל/ת את שני התנאים',sure:1,ports:['מושב בקבינט'],issue:{draft:'draft'}},
+   {t:'מושב בקבינט, ונוסח עמום בגיוס',base:.45,ports:['מושב בקבינט']},
+   {t:'חוק גיוס, ותקציב למילואימניקים במקום הקבינט',base:.5,issue:{draft:'draft'}},
+   {t:'לא מתחייב/ת לכלום',refuse:1}]}},
+ {id:'shas',name:'ש״ס',short:'ש״ס',color:'#C08A1E',base:8,sd:1,pos:8,aff:{likud:85,yashar:30},bluff:.35,rel:.85,cares:{draft:'exempt'},
+  card:{demand:'תיק הפנים, וחוק שמעגן את מעמד לומדי התורה.',opts:[
+   {t:'מקבל/ת את שני התנאים',sure:1,ports:['פנים'],issue:{draft:'exempt'}},
+   {t:'תיק הפנים, ונוסח עמום בחוק',base:.45,ports:['פנים']},
+   {t:'החוק, ותיק הרווחה במקום הפנים',base:.5,ports:['רווחה'],issue:{draft:'exempt'}},
+   {t:'לא מתחייב/ת לכלום',refuse:1}]}},
+ {id:'utj',name:'יהדות התורה',short:'יהדות התורה',color:'#6B7280',base:7.6,sd:.8,pos:9,aff:{likud:80,yashar:20},bluff:.3,rel:.85,cares:{draft:'exempt'},
+  card:{demand:'ראשות ועדת הכספים, וחוק שמעגן פטור מגיוס.',opts:[
+   {t:'מקבל/ת את שני התנאים',sure:1,ports:['ועדת הכספים'],issue:{draft:'exempt'}},
+   {t:'ועדת הכספים, ונוסח עמום בחוק',base:.4,ports:['ועדת הכספים']},
+   {t:'החוק, ותיק השיכון במקום הוועדה',base:.45,ports:['שיכון'],issue:{draft:'exempt'}},
+   {t:'לא מתחייב/ת לכלום',refuse:1}]}},
+ {id:'rzp',name:'הציונות הדתית',short:'הציונות הדתית',color:'#B39B1C',base:3.8,sd:1.1,pos:10,aff:{likud:80,yashar:5},bluff:.4,rel:.8,cares:{security:'hawk'},
+  card:{demand:'שר נוסף במשרד הביטחון, ומדיניות ביטחון נוקשה.',opts:[
+   {t:'מקבל/ת את שני התנאים',sure:1,ports:['שר במשרד הביטחון'],issue:{security:'hawk'}},
+   {t:'השר במשרד הביטחון, ונוסח עמום',base:.45,ports:['שר במשרד הביטחון']},
+   {t:'מדיניות נוקשה, ותיק החקלאות במקום',base:.5,ports:['חקלאות'],issue:{security:'hawk'}},
+   {t:'לא מתחייב/ת לכלום',refuse:1}]}},
+ {id:'otzma',name:'עוצמה יהודית',short:'עוצמה יהודית',color:'#E0892B',base:7.4,sd:1.1,pos:11,aff:{likud:80,yashar:5},bluff:.45,rel:.75,cares:{security:'hawk'},
+  card:{demand:'תיק הביטחון הלאומי, ומדיניות ביטחון נוקשה.',opts:[
+   {t:'מקבל/ת את שני התנאים',sure:1,ports:['ביטחון לאומי'],issue:{security:'hawk'}},
+   {t:'ביטחון לאומי, ונוסח עמום במדיניות',base:.4,ports:['ביטחון לאומי']},
+   {t:'מדיניות נוקשה, ותיק הנגב והגליל במקום',base:.45,ports:['הנגב והגליל'],issue:{security:'hawk'}},
+   {t:'לא מתחייב/ת לכלום',refuse:1}]}}
+];
+P.forEach(p=>{p.cares=p.cares||{}});
+const byId=Object.fromEntries(P.map(p=>[p.id,p]));
+
+/* ---------- rng ---------- */
+function mul(seed){let s=seed>>>0;return()=>{let t=(s+=0x6D2B79F5);t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296}}
+function rand(){let t=(S.r=(S.r+0x6D2B79F5)>>>0);t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296}
+function gauss(r){let u=0,v=0;while(!u)u=r();while(!v)v=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)}
+const CODE_CH='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+function newCode(){let c='';for(let i=0;i<5;i++)c+=CODE_CH[Math.floor(Math.random()*CODE_CH.length)];return c}
+function codeSeed(code){let h=2166136261;for(const ch of code){h^=ch.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
+
+/* ---------- election draw ---------- */
+function drawOnce(r){
+  const raw={};
+  for(const p of P){ if(!p.base) continue; let v=p.base+gauss(r)*p.sd; raw[p.id]=v<3.9?0:v; }
+  const tot=Object.values(raw).reduce((a,b)=>a+b,0);
+  const seats={},rem=[];let used=0;
+  for(const id in raw){const x=raw[id]*120/tot;seats[id]=Math.floor(x);used+=seats[id];rem.push([x-seats[id],id])}
+  rem.sort((a,b)=>b[0]-a[0]);
+  for(let i=0;used<120;i++,used++) seats[rem[i%rem.length][1]]++;
+  for(const id in seats) if(seats[id]>0&&seats[id]<4){ // threshold cleanup
+    const s=seats[id];seats[id]=0;const big=Object.keys(seats).sort((a,b)=>seats[b]-seats[a]);for(let k=0;k<s;k++)seats[big[k%3]]++;
+  }
+  return seats;
+}
+function redOk(ids){for(const [a,b] of REDS) if(ids.includes(a)&&ids.includes(b)) return false;return true}
+function drawSeats(code,cand){
+  const r=mul(codeSeed(code));let seats;
+  for(let k=0;k<60;k++){
+    seats=drawOnce(r);
+    const natural=P.filter(p=>seats[p.id]&&!p.never&&p.aff[cand]>=45).reduce((a,p)=>a+seats[p.id],0);
+    if(natural>=61||natural<50) continue;
+    // must be solvable without the rival's unity deal
+    const pool=P.filter(p=>seats[p.id]&&!p.never&&p.id!==cand&&p.id!==CANDS[cand].rival).map(p=>p.id);
+    let ok=false;
+    for(let m=0;m<(1<<pool.length)&&!ok;m++){const ids=[cand];let s=seats[cand];pool.forEach((id,i)=>{if(m>>i&1){ids.push(id);s+=seats[id]}});if(s>=61&&redOk(ids))ok=true}
+    if(ok) break;
+  }
+  return seats;
+}
+
+/* ---------- game state ---------- */
+let S=null;
+function newGame(code,cand){
+  const seats=drawSeats(code,cand);
+  S={code,cand,r:(codeSeed(code)^(cand==='likud'?0x9E3779B9:0x85EBCA6B))>>>0,seats,ps:{},days:28,ext:false,trust:60,commits:{},ports:{},rot:null,doubles:[],
+     meetings:0,evDone:[],screen:'night',sheet:null,swear:null};
+  for(const p of P){ if(!seats[p.id]) continue;
+    S.ps[p.id]={sat:p.id===cand?100:p.aff[cand],st:p.id===cand?'self':(p.never?'never':'open'),firm:[]};
+  }
+  render();
+}
+const active=()=>P.filter(p=>S.seats[p.id]>0);
+const inCoal=id=>S.ps[id]&&(S.ps[id].st==='self'||S.ps[id].st==='signed');
+const coalSeats=()=>active().filter(p=>inCoal(p.id)).reduce((a,p)=>a+S.seats[p.id],0);
+function blockedBy(id){
+  if(byId[id].never) return 'לא חלק מהמשחק הקואליציוני';
+  for(const [a,b] of REDS){const o=a===id?b:b===id?a:null; if(o&&inCoal(o)) return 'לא יושבת עם '+byId[o].short;}
+  return null;
+}
+const isOpen=id=>S.ps[id].st==='open'&&!blockedBy(id);
+function canReach(ex){
+  const base=coalSeats();const inIds=active().filter(p=>inCoal(p.id)).map(p=>p.id);
+  const pool=active().filter(p=>p.id!==ex&&isOpen(p.id)).map(p=>p.id);
+  for(let m=0;m<(1<<pool.length);m++){const ids=inIds.slice();let s=base;pool.forEach((id,i)=>{if(m>>i&1){ids.push(id);s+=S.seats[id]}});if(s>=61&&redOk(ids))return true}
+  return false;
+}
+const pivotal=id=>coalSeats()<61&&canReach(null)&&!canReach(id);
+function chance(o,id){return Math.max(.05,Math.min(.95,o.base+.3*(S.ps[id].sat-50)/50-(pivotal(id)?.15:0)))}
+const chanceWord=p=>p>=.65?['גבוה','good']:p>=.4?['בינוני','warn']:['נמוך','bad'];
+function moodOf(sat){return sat>=75?['נלהבת','good']:sat>=50?['פתוחה','acc']:sat>=30?['קרירה','warn']:['עוינת','bad']}
+
+/* ---------- negotiation ---------- */
+function previewTags(o,id){
+  const t=[];
+  if(o.refuse){t.push(['בלף או פיצוץ','warn']);return t}
+  if(o.sure)t.push(['חתימה בטוחה','good']);else{const [w,c]=chanceWord(chance(o,id));t.push(['סיכוי '+w,c])}
+  (o.ports||[]).forEach(x=>{const h=S.ports[x];t.push(['תיק: '+x,SENIOR.includes(x)?'acc':''])
+    if(h&&h!==id)t.push([x+' כבר הובטח ל'+byId[h].short,'bad'])});
+  if(o.rot)t.push([o.rot==='them'?'רוטציה: הם ראשונים':'רוטציה: את/ה ראשון/ה',o.rot==='them'?'bad':'warn']);
+  for(const k in (o.issue||{})){const v=o.issue[k];t.push([ISSUES[k].name+': '+ISSUES[k][v],'']);
+    if(S.commits[k]&&S.commits[k]!==v)t.push(['סותר הבטחה קודמת','bad']);
+    for(const p of active()){ if(p.id===id||!inCoal(p.id)||p.id===S.cand) continue; const c=p.cares[k]; if(!c||c===v) continue;
+      t.push(S.ps[p.id].firm.includes(k)?[p.short+' תפרוש','bad']:[p.short+' תתרעם','warn'])}
+  }
+  if(!o.ports&&!o.issue&&!o.rot&&!o.refuse)t.push(['בלי תיק','']);
+  return t;
+}
+function leave(id,msgs,why){S.ps[id].st='gone';msgs.push([byId[id].short+' '+(S.ps[id].wasSigned?'פורשת מהקואליציה':'מפסיקה את המשא ומתן')+(why?': '+why:'.'),'bad'])}
+function commitIssue(k,v,src,msgs){
+  if(S.commits[k]&&S.commits[k]!==v){S.trust-=8;msgs.push(['זיגזג: הבטחת קודם '+ISSUES[k][S.commits[k]]+'. אמון הציבור יורד.','bad'])}
+  S.commits[k]=v;
+  for(const p of active()){ if(p.id===src||p.id===S.cand) continue; const c=p.cares[k]; if(!c||c===v) continue; const q=S.ps[p.id];
+    if(q.st==='signed'){ if(q.firm.includes(k)) leave(p.id,msgs,'הבטחת לה '+ISSUES[k][c]+'.');
+      else{q.sat-=25; if(q.sat<40) leave(p.id,msgs,'היא דרשה '+ISSUES[k][c]+'.'); else msgs.push([p.short+' מתרעמת, אבל נשארת.','warn'])}}
+    else if(q.st==='open'){q.sat-=20; if(q.sat<15) leave(p.id,msgs,'היא דורשת '+ISSUES[k][c]+'.'); else msgs.push([p.short+' מתקררת בגלל ההתחייבות.','warn'])}
+  }
+}
+function sign(id,o,msgs){
+  const q=S.ps[id];
+  for(const x of (o.ports||[])){const h=S.ports[x]; if(h&&h!==id&&inCoal(h)) S.doubles.push({x,first:h,second:id}); S.ports[x]=id;}
+  if(o.rot) S.rot=o.rot;
+  q.st='signed';q.wasSigned=true;q.sat=Math.min(100,Math.max(q.sat,50)+15);q.firm=Object.keys(o.issue||{});
+  msgs.unshift([byId[id].short+' חותמת על הסכם קואליציוני. +'+S.seats[id]+' מנדטים.','good']);
+  for(const k in (o.issue||{})) commitIssue(k,o.issue[k],id,msgs);
+}
+function resolve(id,idx){
+  const p=byId[id],q=S.ps[id],o=p.card.opts[idx],msgs=[];
+  const cost=3+Math.floor(rand()*3);S.days-=cost;S.meetings++;
+  let head,tone;
+  if(o.refuse){
+    if(rand()<p.bluff*q.sat/100){head='הם בלפו.';tone='good';sign(id,{},msgs);msgs.push(['חתמו בלי לקבל כלום.','good'])}
+    else{q.sat-=25;head='הם קמים מהשולחן.';tone='bad'; if(q.sat<25) leave(id,msgs); else msgs.push(['אפשר לנסות שוב, אבל הם כועסים.','warn'])}
+  }else if(o.sure||rand()<chance(o,id)){head=o.sure?'סגרנו.':'זה עבד.';tone='good';sign(id,o,msgs)}
+  else{q.sat-=12;head='לא הסכימו.';tone='bad'; if(q.sat<15) leave(id,msgs); else msgs.push(['הם עדיין ליד השולחן. אפשר לנסות שוב.','warn'])}
+  S.sheet={kind:'result',id,head,tone,msgs,cost};
+  render();
+}
+
+/* ---------- events ---------- */
+function rivalId(){return CANDS[S.cand].rival}
+function pickEvent(){
+  const E=[],open=active().filter(p=>isOpen(p.id)),signed=active().filter(p=>S.ps[p.id].st==='signed'&&p.id!=='indy');
+  const dbl=S.doubles.find(d=>!d.done&&inCoal(d.first));
+  if(dbl) E.push({w:6,run(){dbl.done=true;const f=byId[dbl.first],q=S.ps[f.id],msgs=[];S.trust-=6;q.sat-=30;
+    if(q.sat<40) leave(f.id,msgs,'גילתה שהבטחת את תיק '+dbl.x+' גם ל'+byId[dbl.second].short+'.'); else msgs.push([f.short+' זועמת, אבל נשארת. בינתיים.','warn']);
+    return {title:'הדלפה',text:'בערוצי החדשות מדווחים שתיק '+dbl.x+' הובטח לשתי מפלגות: '+f.short+' ו'+byId[dbl.second].short+'.',msgs}}});
+  const weak=signed.filter(p=>S.ps[p.id].sat<75);
+  if(weak.length&&!S.evDone.includes('steal')) E.push({w:3,key:'steal',run(){const p=weak[Math.floor(rand()*weak.length)];
+    return {title:'הצעה מהצד השני',text:'המחנה היריב מציע ל'+p.short+' הצעה טובה יותר. הם מחכים לשמוע ממך עד הערב.',choice:[
+      {t:'משווים את ההצעה',tag:'אמון הציבור יורד',go(){S.trust-=6;S.ps[p.id].sat+=15;return [[p.short+' נשארת.','good']]}},
+      {t:'לא נכנעים לסחטנות',tag:'סיכוי שתעזוב',go(){const m=[];if(rand()<.5) leave(p.id,m,'קיבלה את ההצעה של היריב.'); else {S.ps[p.id].sat-=10;m.push([p.short+' נשארת, ממורמרת.','warn'])}return m}}]}}});
+  if(open.length&&!S.evDone.includes('poll')) E.push({w:2,key:'poll',run(){const p=open[Math.floor(rand()*open.length)];S.ps[p.id].sat-=12;
+    return {title:'סקר חדש',text:'סקר מראה ש'+p.short+' תתחזק אם ילכו לבחירות חוזרות. הצוות שלה מקשיח עמדות.',msgs:[[p.short+' פחות מתפשרת.','warn']]}}});
+  if(!S.evDone.includes('sec')) E.push({w:2,key:'sec',run(){S.days-=3;S.trust+=4;return {title:'אירוע ביטחוני',text:'הקבינט מתכנס בלילה. המשא ומתן מוקפא לשלושה ימים.',msgs:[['−3 ימים. הציבור מתלכד: אמון +4.','warn']]}}});
+  const rv=rivalId();
+  if(S.ps[rv]&&S.ps[rv].st==='open'&&!S.evDone.includes('pres')) E.push({w:2,key:'pres',run(){S.ps[rv].sat+=20;return {title:'הנשיא קורא לאחדות',text:'בית הנשיא קורא להקים ממשלה רחבה ככל האפשר. '+byId[rv].short+' מאותתת שהיא מוכנה לדבר.',msgs:[[byId[rv].short+' פתוחה יותר לאחדות.','good']]}}});
+  if(S.ps[rv]&&S.seats[rv]>6&&!S.seats.indy&&!S.evDone.includes('indy')) E.push({w:2,key:'indy',run(){S.seats[rv]--;S.seats.indy=1;S.ps.indy={sat:70,st:'signed',wasSigned:true,firm:[]};
+    return {title:'עריק',text:'ח״כ מ'+byId[rv].short+' מודיע שיפרוש לסיעה של יחיד ויתמוך בממשלה שלך.',msgs:[['+1 מנדט לקואליציה.','good']]}}});
+  if(!S.evDone.includes('demo')) E.push({w:1,key:'demo',run(){S.trust-=5;return {title:'מחאה',text:'אלפים מפגינים מול הכנסת נגד ההסכמים המתגבשים.',msgs:[['אמון הציבור −5.','bad']]}}});
+  if(open.length&&!S.evDone.includes('night')) E.push({w:1,key:'night',run(){open.forEach(p=>S.ps[p.id].sat+=6);return {title:'פגישת לילה',text:'שיחה ארוכה במלון בירושלים. כולם יוצאים עם חיוך.',msgs:[['כל המפלגות הפתוחות מתחממות.','good']]}}});
+  let tot=E.reduce((a,e)=>a+e.w,0),x=rand()*tot;
+  for(const e of E){x-=e.w;if(x<=0){if(e.key)S.evDone.push(e.key);return e.run()}}
+  return null;
+}
+function afterSheet(){
+  S.sheet=null;
+  S.trust=Math.max(0,Math.min(100,S.trust));
+  if(S.days<=0) return deadline();
+  if([2,4,7,10].includes(S.meetings)&&!S.evFor?.includes(S.meetings)&&rand()<.8){
+    (S.evFor=S.evFor||[]).push(S.meetings);
+    const ev=pickEvent(); if(ev){S.sheet={kind:'event',...ev};return render()}
+  }
+  if(coalSeats()<61&&!canReach(null)){S.sheet={kind:'dead'};return render()}
+  render();
+}
+function deadline(){
+  if(coalSeats()>=61){S.sheet={kind:'info',title:'הזמן נגמר',text:'יש לך רוב. הולכים להשבעה.',next:'swear'};return render()}
+  if(!S.ext){S.ext=true;S.days+=14;S.trust-=4;S.sheet={kind:'info',title:'הארכה',text:'הנשיא מאריך את המנדט ב-14 ימים. זו ההארכה האחרונה.',next:'board'};return render()}
+  endGame(false,'המנדט חזר לנשיא');
+}
+
+/* ---------- swear & end ---------- */
+function goSwear(){
+  const rows=[];let yes=0,no=0;
+  for(const p of active()){ if(!inCoal(p.id)) continue; const q=S.ps[p.id],n=S.seats[p.id];
+    let d=0; if(p.id!==S.cand){const pr=Math.max(0,(60-q.sat)/100)*(1-p.rel)*2+(S.trust<35?.1:0); if(rand()<pr) d=1}
+    yes+=n-d;no+=d;rows.push({p,yes:n-d,d});
+  }
+  S.swear={rows,yes,no};S.screen='swear';S.sheet=null;render();
+}
+function endGame(ok,reason){
+  const seats=ok?S.swear.yes:coalSeats();
+  let score=0,br=[],title;
+  if(ok){
+    const senior=SENIOR.filter(x=>!S.ports[x]).length;
+    br=[['הרכבת ממשלה',400],['רוב של '+seats,Math.min(seats-61,10)*20],['אמון הציבור '+S.trust,S.trust*2],['תיקים בכירים שנשארו אצלך: '+senior,senior*50],['ימים שנותרו: '+Math.max(0,S.days),Math.min(Math.max(0,S.days),20)*5]];
+    if(S.rot) br.push([S.rot==='them'?'רוטציה, היריב ראשון':'רוטציה, את/ה ראשון/ה',S.rot==='them'?-250:-100]);
+    score=br.reduce((a,b)=>a+b[1],0);
+    title=S.rot==='them'?'ממשלת רוטציה':S.rot==='me'?'ממשלת אחדות':seats>=70?'ממשלה רחבה':seats<=62?'61 ותפילה':S.trust<35?'ממשלה בלי ציבור':'ממשלה יציבה';
+  }else{title=reason||'בחירות חוזרות';br=[['לא הורכבה ממשלה',0]];}
+  S.end={ok,title,score,br,seats};S.screen='end';S.sheet=null;render();
+}
+
+/* ---------- hemicycle ---------- */
+const SEATPOS=(()=>{const rows=6,r0=42,r1=94,rs=[];for(let i=0;i<rows;i++)rs.push(r0+(r1-r0)*i/(rows-1));
+  const sum=rs.reduce((a,b)=>a+b,0);let cnt=rs.map(r=>Math.round(120*r/sum));cnt[rows-1]+=120-cnt.reduce((a,b)=>a+b,0);
+  const out=[];rs.forEach((r,i)=>{const n=cnt[i];for(let j=0;j<n;j++){const a=Math.PI-j*Math.PI/(n-1);out.push({a,x:100+r*Math.cos(a),y:100-r*Math.sin(a)})}});
+  out.sort((p,q)=>q.a-p.a);return out})();
+function hemi(mode,animate){
+  const order=P.filter(p=>S.seats[p.id]).sort((a,b)=>a.pos-b.pos);const cols=[];
+  for(const p of order){const st=S.ps[p.id]?.st;const op=mode==='all'||st==='self'||st==='signed'?1:(st==='open'&&!blockedBy(p.id))?.32:.12;for(let i=0;i<S.seats[p.id];i++)cols.push([p.color,op])}
+  let s='<svg class="hemi" viewBox="0 0 200 104" role="img" aria-label="מליאת הכנסת: '+coalSeats()+' מתוך 120 מושבים בקואליציה">';
+  SEATPOS.forEach((pt,i)=>{const c=cols[i]||['#999',.2];s+=`<circle class="${animate?'seat':''}" style="${animate?'animation-delay:'+(i*9)+'ms;':''}transform-origin:${pt.x}px ${pt.y}px" cx="${pt.x.toFixed(2)}" cy="${pt.y.toFixed(2)}" r="3.7" fill="${c[0]}" fill-opacity="${c[1]}"/>`});
+  return s+'</svg>';
+}
+
+/* ---------- flag ---------- */
+function flag(cls){
+  const cx=110,cy=80,r=30,pt=(a,rr)=>[(cx+rr*Math.sin(a)).toFixed(2),(cy-rr*Math.cos(a)).toFixed(2)].join(',');
+  const tri=o=>[0,1,2].map(i=>pt(o+i*2*Math.PI/3,r)).join(' ');
+  return `<svg class="flag ${cls||''}" viewBox="0 0 220 160" role="img" aria-label="דגל ישראל"><rect width="220" height="160" fill="#fff"/><rect y="15" width="220" height="25" fill="#0038B8"/><rect y="120" width="220" height="25" fill="#0038B8"/><g fill="none" stroke="#0038B8" stroke-width="5.5" stroke-linejoin="miter"><polygon points="${tri(0)}"/><polygon points="${tri(Math.PI)}"/></g></svg>`;
+}
+
+/* ---------- render ---------- */
+const app=document.getElementById('app');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const chip=([t,c])=>`<span class="chip ${c||''}">${esc(t)}</span>`;
+let ui={cand:null,showCode:false,code:''};
+
+function render(){
+  if(!S||S.screen==='intro') return renderIntro();
+  const f={night:renderNight,board:renderBoard,swear:renderSwear,end:renderEnd}[S.screen];
+  app.innerHTML=f()+renderSheet();
+}
+function renderIntro(){
+  const c=ui.cand;
+  app.innerHTML=`<div class="wrap">
+   <header class="hero">${flag()}<div class="eyebrow">יום אחרי הבחירות לכנסת ה-26</div>
+     <div class="big display num">61</div><h1 class="display">שישים ואחת</h1>
+     <p>קיבלת את המנדט. יש לך 28 ימים להרכיב ממשלה, ואי אפשר לתת לכולם הכל.</p></header>
+   <section style="display:grid;gap:10px"><div class="sect">בחר/י מועמד/ת</div>
+    <div class="cands">${Object.entries(CANDS).map(([id,k])=>`<button class="cand" data-act="cand" data-id="${id}" aria-pressed="${c===id}">
+      <span class="sub"><span class="dot" style="background:${byId[id].color}"></span>${k.party}</span>
+      <span class="who">${k.leader}</span><span class="sub num">כ-${Math.round(byId[id].base)} מנדטים בסקרים</span></button>`).join('')}</div>
+   </section>
+   <div class="rules"><ul>
+     <li>בכל פגישה צוות המשא ומתן מציג דרישה, ויש לך 4 תשובות.</li>
+     <li>כל פגישה שורפת 3–5 ימים. הבטחות סותרות מפרקות קואליציות.</li>
+     <li>משחק שלם נמשך כמה דקות.</li></ul></div>
+   <button class="btn" data-act="start" ${c?'':'disabled'}>${c?'לליל הבחירות':'בחר/י מועמד/ת כדי להתחיל'}</button>
+   <div>${ui.showCode?`<div class="code-in"><input id="codein" maxlength="5" placeholder="קוד הגרלה" value="${esc(ui.code)}" aria-label="קוד הגרלה"></div>`:`<button class="linkbtn" data-act="showcode">יש לי קוד הגרלה מחבר/ה</button>`}</div>
+   <p class="fine">זה משחק. תוצאות הבחירות מוגרלות סביב ממוצע הסקרים שפורסמו בסוף אוגוסט 2026. הדרישות והיחסים בין המפלגות מפושטים לצורכי המשחק, ואינם ציטוטים או עמדות רשמיות. המשא ומתן מתנהל מול צוותים, לא מול אנשים.</p>
+  </div>`;
+}
+function renderNight(){
+  const rows=active().filter(p=>p.id!=='indy').sort((a,b)=>S.seats[b.id]-S.seats[a.id]);
+  const dropped=P.filter(p=>p.base&&!S.seats[p.id]);
+  return `<div class="wrap">
+    <div><div class="eyebrow">ליל הבחירות · קוד <span class="num" dir="ltr">${S.code}</span></div><h1 class="display" style="font-size:30px">התוצאות</h1></div>
+    <div class="hemi-box">${hemi('all',true)}</div>
+    <div class="list">${rows.map(p=>`<div class="prow" style="grid-template-columns:auto 1fr auto"><span class="sw" style="background:${p.color}"></span><span class="nm">${p.name}${p.id===S.cand?' <span class="chip acc">המפלגה שלך</span>':''}</span><span class="seats num">${S.seats[p.id]}</span></div>`).join('')}</div>
+    ${dropped.length?`<p class="muted" style="font-size:14px">לא עברו את אחוז החסימה: ${dropped.map(p=>p.name).join(', ')}.</p>`:''}
+    <button class="btn" data-act="toboard">קבלת המנדט מהנשיא</button></div>`;
+}
+function renderBoard(){
+  const seats=coalSeats();const daysMax=S.ext?14:28;
+  const commits=Object.entries(S.commits).map(([k,v])=>chip([ISSUES[k].name+': '+ISSUES[k][v],'acc'])).join('');
+  const all=active().filter(p=>p.id!==S.cand);
+  const openL=all.filter(p=>isOpen(p.id)).sort((a,b)=>S.seats[b.id]-S.seats[a.id]);
+  const inL=all.filter(p=>inCoal(p.id));
+  const outL=all.filter(p=>!inCoal(p.id)&&!isOpen(p.id));
+  const row=(p,kind)=>{const q=S.ps[p.id];let meta='';
+    if(kind==='open'){const [m,c]=moodOf(q.sat);meta=`<span class="mood" style="color:var(--${c==='acc'?'accent':c})">${m}</span> · ${esc(p.card.demand.split(',')[0])}`+(pivotal(p.id)?' · <b>בלעדיה אין 61</b>':'')}
+    else if(kind==='in'){meta='חתומה'+(q.firm.length?' · מחויבת: '+q.firm.map(k=>ISSUES[k][S.commits[k]]||'').join(', '):'')}
+    else meta=q.st==='gone'?'עזבה את המשא ומתן':blockedBy(p.id)||'';
+    return `<button class="prow ${kind}" ${kind==='open'?`data-act="meet" data-id="${p.id}"`:'disabled'} aria-label="${esc(p.name)}, ${S.seats[p.id]} מנדטים">
+      <span class="sw" style="background:${p.color}"></span><span><span class="nm">${p.name}</span><br><span class="meta">${meta}</span></span><span class="seats num">${S.seats[p.id]}</span></button>`};
+  return `<div class="wrap">
+    <div class="stats">
+      <div class="stat"><span class="l">${S.ext?'ימי הארכה':'ימים למנדט'}</span><span class="v num">${Math.max(0,S.days)}</span><div class="bar ${S.days<=6?'low':''}"><i style="width:${Math.max(0,S.days)/daysMax*100}%"></i></div></div>
+      <div class="stat"><span class="l">אמון הציבור</span><span class="v num">${S.trust}</span><div class="bar ${S.trust<35?'low':''}"><i style="width:${S.trust}%"></i></div></div>
+      <div class="stat"><span class="l">חתומים</span><span class="v num">${seats}<span class="muted" style="font-size:15px">/61</span></span><div class="bar"><i style="width:${Math.min(100,seats/61*100)}%;background:${seats>=61?'var(--good)':'var(--accent)'}"></i></div></div>
+    </div>
+    <div class="hemi-box">${hemi('coal')}<div class="hemi-label"><div class="n display num" style="color:${seats>=61?'var(--good)':'var(--ink)'}">${seats}</div><div class="of">${seats>=61?'יש רוב':'חסרים '+(61-seats)}</div></div></div>
+    ${commits?`<div class="commits"><span class="muted">הבטחת:</span>${commits}</div>`:''}
+    ${seats>=61?`<div class="banner"><div><b>יש לך ${seats} חתומים.</b> אפשר ללכת להשבעה, או להרחיב את הרוב כדי לצמצם סיכון לערקים.</div><button class="btn" data-act="swear">להשבעה בכנסת</button></div>`:''}
+    ${openL.length?`<div class="sect">במשא ומתן · בחר/י מפלגה לפגישה</div><div class="list">${openL.map(p=>row(p,'open')).join('')}</div>`:''}
+    <div class="sect">בקואליציה</div><div class="list">
+      <div class="prow" style="opacity:1"><span class="sw" style="background:${byId[S.cand].color}"></span><span><span class="nm">${byId[S.cand].name}</span><br><span class="meta">המפלגה שלך</span></span><span class="seats num">${S.seats[S.cand]}</span></div>
+      ${inL.map(p=>row(p,'in')).join('')}</div>
+    ${outL.length?`<div class="sect">מחוץ לתמונה</div><div class="list">${outL.map(p=>row(p,'out')).join('')}</div>`:''}
+    <p class="fine">קוד הגרלה: <span class="num" dir="ltr">${S.code}</span></p>
+  </div>`;
+}
+function renderSheet(){
+  const sh=S.sheet;if(!sh)return '';
+  let body='';
+  if(sh.kind==='meet'){const p=byId[sh.id],q=S.ps[sh.id],[m,c]=moodOf(q.sat);
+    body=`<div class="row" style="justify-content:space-between;align-items:center"><div><div class="eyebrow">פגישה · ${S.seats[p.id]} מנדטים</div><h2 class="display">${p.name}</h2></div>${chip(['מצב רוח: '+m,c])}</div>
+     <div class="demand"><span class="eyebrow">צוות המשא ומתן דורש</span><div class="q">${esc(p.card.demand)}</div>${pivotal(p.id)?'<span class="chip bad" style="justify-self:start">הם יודעים שבלעדיהם אין לך 61</span>':''}</div>
+     <div class="opts">${p.card.opts.map((o,i)=>`<button class="opt" data-act="pick" data-i="${i}"><span class="t">${esc(o.t)}</span><span class="tags">${previewTags(o,p.id).map(chip).join('')}</span></button>`).join('')}</div>
+     <button class="btn ghost" data-act="close">עוד לא. חזרה ללוח</button>`;}
+  else if(sh.kind==='result'){body=`<div class="result"><div class="eyebrow">${byId[sh.id].name} · עברו ${sh.cost} ימים</div><div class="head display" style="color:var(--${sh.tone})">${sh.head}</div>
+     <ul>${sh.msgs.map(([t,c])=>`<li style="color:var(--${c==='good'?'ink':c})">${esc(t)}</li>`).join('')}</ul></div><button class="btn" data-act="after">המשך</button>`;}
+  else if(sh.kind==='event'){body=`<div class="result"><div class="eyebrow">בינתיים</div><div class="head display">${esc(sh.title)}</div><p>${esc(sh.text)}</p>
+     ${sh.msgs?`<ul>${sh.msgs.map(([t,c])=>`<li style="color:var(--${c==='good'?'ink':c})">${esc(t)}</li>`).join('')}</ul>`:''}</div>
+     ${sh.choice?`<div class="opts">${sh.choice.map((o,i)=>`<button class="opt" data-act="evpick" data-i="${i}"><span class="t">${esc(o.t)}</span><span class="tags">${chip([o.tag,'warn'])}</span></button>`).join('')}</div>`:`<button class="btn" data-act="evdone">המשך</button>`}`;}
+  else if(sh.kind==='info'){body=`<div class="result"><div class="head display">${esc(sh.title)}</div><p>${esc(sh.text)}</p></div><button class="btn" data-act="info">המשך</button>`;}
+  else if(sh.kind==='dead'){body=`<div class="result"><div class="head display" style="color:var(--bad)">אין דרך ל-61</div><p>עם המפלגות שנשארו ליד השולחן, אי אפשר להגיע לרוב.</p></div><button class="btn" data-act="giveup">להחזיר את המנדט</button>`;}
+  return `<div class="scrim"><div class="sheet" role="dialog" aria-modal="true">${body}</div></div>`;
+}
+function renderSwear(){
+  const w=S.swear;
+  return `<div class="wrap"><div><div class="eyebrow">מליאת הכנסת · הצבעת אמון</div><h1 class="display" style="font-size:30px">ההשבעה</h1></div>
+   <div class="votes">${w.rows.map((r,i)=>`<div class="vrow" style="animation-delay:${i*160}ms"><span class="sw" style="width:14px;height:14px;border-radius:4px;background:${r.p.color}"></span><span><b>${r.p.name}</b>${r.d?` <span class="chip bad">ח״כ אחד לא הגיע</span>`:''}</span><span class="num" style="font-weight:800">${r.yes} בעד</span></div>`).join('')}</div>
+   <div class="endcard"><div class="eyebrow">בעד הממשלה</div><div class="score display num" style="color:${w.yes>=61?'var(--good)':'var(--bad)'}">${w.yes}</div><div class="muted">${w.yes>=61?'יש רוב. הממשלה מושבעת.':'אין רוב. הממשלה נפלה במליאה.'}</div></div>
+   <button class="btn" data-act="toend">${w.yes>=61?'לתוצאה':'לתוצאה'}</button></div>`;
+}
+function renderEnd(){
+  const e=S.end,k=CANDS[S.cand];
+  const share=e.ok?`הרכבתי ממשלה של ${e.seats} ח״כים ב"שישים ואחת": ${e.title}, ${e.score} נקודות. קוד ההגרלה: ${S.code}. תנסו לעקוף.`:`ניסיתי להרכיב ממשלה ב"שישים ואחת" ונכשלתי: ${e.title}. קוד ההגרלה: ${S.code}. תנסו אתם.`;
+  const given=Object.entries(S.ports).filter(([x,id])=>inCoal(id)).map(([x,id])=>x+' ← '+byId[id].short);
+  return `<div class="wrap">
+   <div class="endcard">${e.ok?flag("sm"):""}<div class="eyebrow">${k.leader} · ${k.party}</div><div class="title display" style="color:${e.ok?'var(--ink)':'var(--bad)'}">${esc(e.title)}</div>
+    ${e.ok?`<div class="score display num">${e.score}</div><div class="muted">נקודות</div>`:`<p class="muted">${coalSeats()} חתומים כשהזמן נגמר.</p>`}
+    <div class="hemi-box" style="width:100%">${hemi('coal')}</div>
+    <div class="break">${e.br.map(([t,v])=>`<div><span>${esc(t)}</span><b class="num" dir="ltr">${v>0?'+':''}${v}</b></div>`).join('')}</div>
+    ${given.length?`<div class="fine" style="text-align:start;width:100%">חלוקת תיקים: ${esc(given.join(' · '))}</div>`:''}
+   </div>
+   <div class="row"><button class="btn" data-act="again">הגרלה חדשה</button><button class="btn ghost" data-act="other">אותה הגרלה, ${esc(CANDS[k.rival].leader)}</button></div>
+   <div style="display:grid;gap:8px"><div class="sect">לשתף</div><textarea id="sharetxt" class="sharebox" rows="3" readonly>${esc(share)}</textarea><button class="btn ghost small" data-act="copy" id="copybtn">העתקה</button></div>
+  </div>`;
+}
+
+/* ---------- events wiring ---------- */
+app.addEventListener('input',e=>{if(e.target.id==='codein')ui.code=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,5)});
+app.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act;
+  if(a==='cand'){ui.cand=b.dataset.id;renderIntro();return}
+  if(a==='showcode'){ui.showCode=true;renderIntro();setTimeout(()=>document.getElementById('codein')?.focus());return}
+  if(a==='start'){const code=ui.code.length===5?ui.code:newCode();newGame(code,ui.cand);scrollTo(0,0);return}
+  if(a==='toboard'){S.screen='board';render();scrollTo(0,0);return}
+  if(a==='meet'){S.sheet={kind:'meet',id:b.dataset.id};render();return}
+  if(a==='close'){S.sheet=null;render();return}
+  if(a==='pick'){resolve(S.sheet.id,+b.dataset.i);return}
+  if(a==='after'||a==='evdone'){afterSheet();return}
+  if(a==='evpick'){const m=S.sheet.choice[+b.dataset.i].go();S.sheet={kind:'event',title:S.sheet.title,text:S.sheet.text,msgs:m};render();return}
+  if(a==='info'){const n=S.sheet.next;S.sheet=null;if(n==='swear')goSwear();else afterSheet();return}
+  if(a==='giveup'){endGame(false,'בחירות חוזרות');return}
+  if(a==='swear'){goSwear();scrollTo(0,0);return}
+  if(a==='toend'){endGame(S.swear.yes>=61,'הממשלה נפלה במליאה');scrollTo(0,0);return}
+  if(a==='again'){ui.code='';ui.showCode=false;ui.cand=S.cand;S=null;renderIntro();scrollTo(0,0);return}
+  if(a==='other'){const c=CANDS[S.cand].rival;ui.cand=c;newGame(S.code,c);scrollTo(0,0);return}
+  if(a==='copy'){const t=document.getElementById('sharetxt');t.select();let ok=false;
+    try{navigator.clipboard.writeText(t.value).then(()=>{b.textContent='הועתק'},()=>{try{ok=document.execCommand('copy')}catch(_){};b.textContent=ok?'הועתק':'סמנו והעתיקו ידנית'})}catch(_){try{ok=document.execCommand('copy')}catch(__){};b.textContent=ok?'הועתק':'סמנו והעתיקו ידנית'}
+    return}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&S&&S.sheet&&S.sheet.kind==='meet'){S.sheet=null;render()}});
+
+/* ---------- boot ---------- */
+function boot(d){ if(d&&d.S&&d.S.screen){S=d.S;ui=d.ui||ui;render()} else renderIntro(); }
+window.claude?.hot?.snapshot?.(()=>({S,ui}));
+window.claude?.hot?.ready ? window.claude.hot.ready(boot) : boot(window.claude?.hot?.data ?? {});
+</script>
+
+</body>
+</html>
