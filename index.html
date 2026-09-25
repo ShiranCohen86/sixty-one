@@ -41,7 +41,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
 .hemi-label{position:absolute;inset-inline:0;bottom:2%;text-align:center;line-height:1}
 .hemi-label .n{font-size:clamp(34px,11vw,52px)}
 .hemi-label .of{font-size:14px;color:var(--muted);font-weight:700}
-.cands{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.cands{display:grid;grid-template-columns:1fr;gap:10px}
 .cand{background:#fff;border:2px solid var(--line);border-radius:14px;padding:14px;text-align:start;display:grid;gap:4px}
 .cand[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 3px var(--accent-soft)}
 .cand .who{font-weight:800;font-size:17px;line-height:1.2}
@@ -124,7 +124,11 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
 @keyframes fade{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:reduce){.seat,.scrim,.sheet,.vrow{animation:none}.bar i{transition:none}}
 @media (max-width:360px){.prow{padding:10px}.chip{font-size:11.5px;padding:2px 7px}.cand{padding:10px}}
-@media (min-width:601px){.cards,.votes{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}}
+@media (min-width:601px){.cards,.votes{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}.cands{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){
+  .ctabar{position:sticky;bottom:0;z-index:3;background:var(--bg);margin-inline:calc(-1 * clamp(14px,4vw,24px));padding-inline:clamp(14px,4vw,24px);padding-block:10px calc(10px + env(safe-area-inset-bottom,0px));box-shadow:0 -8px 14px -10px rgba(10,31,92,.18)}
+  .wrap{padding-block-end:0}
+}
 @media (min-width:760px){
   .wrap{max-width:900px}
   .cols{grid-template-columns:minmax(0,360px) minmax(0,1fr);align-items:start}
@@ -732,8 +736,8 @@ function renderIntro(){
     <div style="display:grid;gap:6px"><span class="muted" style="font-size:13px;font-weight:700">רמת קושי</span>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">${['e','n','h'].map(v=>`<button class="btn ${ui.diff===v?'':'ghost'} small" style="width:100%" data-act="diff" data-v="${v}" aria-pressed="${ui.diff===v}">${DIFF_LABEL[v]}</button>`).join('')}</div></div>
    </div>
-   <button class="btn" data-act="start" ${c?'':'disabled'}>${c?'לליל הבחירות':'בחר/י מפלגה כדי להתחיל'}</button>
    <div class="row" style="gap:16px">${ui.showCode?`<div class="code-in"><input id="codein" maxlength="6" placeholder="קוד הגרלה" value="${esc(ui.code)}" aria-label="קוד הגרלה"></div>`:`<button class="linkbtn" data-act="showcode">יש לי קוד</button>`}<button class="linkbtn" data-act="daily">אתגר יומי</button><button class="linkbtn" data-act="howbuilt">איך נבנה</button></div>
+   <div class="ctabar"><button class="btn" data-act="start" ${c?'':'disabled'}>${c?'לליל הבחירות':'בחר/י מפלגה כדי להתחיל'}</button></div>
   </div>`;
 }
 function renderNight(){
@@ -744,7 +748,7 @@ function renderNight(){
     <div class="hemi-box">${hemi('all',true)}</div>
     <div class="cards">${rows.map(p=>`<div class="prow" style="grid-template-columns:auto 1fr auto"><span class="sw" style="background:${p.color}"></span><span class="nm">${p.name}${p.id===S.cand?' <span class="chip acc">המפלגה שלך</span>':''}</span><span class="seats num">${S.seats[p.id]}</span></div>`).join('')}</div>
     ${dropped.length?`<div class="sect">לא עברו את אחוז החסימה</div><div class="cards">${dropped.map(p=>`<div class="prow" style="opacity:.6"><span class="sw" style="background:${p.color}"></span><span><span class="nm">${p.name}</span><br><span class="meta">${p.id===S.cand?'המפלגה שלך נשארה מחוץ לכנסת':'מתחת ל-3.25% מהקולות'}</span></span><span class="seats num">0</span></div>`).join('')}</div>`:''}
-    <button class="btn" data-act="toboard">קבלת המנדט מהנשיא</button></div>`;
+    <div class="ctabar"><button class="btn" data-act="toboard">קבלת המנדט מהנשיא</button></div></div>`;
 }
 function renderBoard(){
   const seats=coalSeats();const daysMax=S.ext?14:28;
@@ -806,7 +810,7 @@ function renderSwear(){
   return `<div class="wrap"><div><div class="eyebrow">מליאת הכנסת · הצבעת אמון</div><h1 class="display" style="font-size:30px">ההשבעה</h1></div>
    <div class="votes">${w.rows.map((r,i)=>`<div class="vrow" style="animation-delay:${i*160}ms"><span class="sw" style="width:14px;height:14px;border-radius:4px;background:${r.p.color}"></span><span><b>${r.p.name}</b>${r.d?` <span class="chip bad">ח״כ אחד לא הגיע</span>`:''}</span><span class="num" style="font-weight:800">${r.yes} בעד</span></div>`).join('')}</div>
    <div class="endcard"><div class="eyebrow">בעד הממשלה</div><div class="score display num" style="color:${w.yes>=61?'var(--good)':'var(--bad)'}">${w.yes}</div><div class="muted">${w.yes>=61?'יש רוב. הממשלה מושבעת.':'אין רוב. הממשלה נפלה במליאה.'}</div></div>
-   <button class="btn" data-act="toend">${w.yes>=61?'לתוצאה':'לתוצאה'}</button></div>`;
+   <div class="ctabar"><button class="btn" data-act="toend">${w.yes>=61?'לתוצאה':'לתוצאה'}</button></div></div>`;
 }
 function renderEnd(){
   const e=S.end,me=byId[S.cand];
